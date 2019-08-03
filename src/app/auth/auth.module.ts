@@ -5,7 +5,13 @@ import { RegistrationComponent } from "./registration/registration.component";
 import { AuthComponent } from "./auth.component";
 import { AuthRoutingModule } from "./auth-routing.module";
 import { SharedModule } from "../shared/shared.module";
-import {ErrorStateMatcher, MatFormFieldModule, MatInputModule, ShowOnDirtyErrorStateMatcher} from "@angular/material";
+import {
+  ErrorStateMatcher,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule, MatRadioModule,
+  ShowOnDirtyErrorStateMatcher
+} from "@angular/material";
 
 @NgModule({
   declarations: [
@@ -18,7 +24,9 @@ import {ErrorStateMatcher, MatFormFieldModule, MatInputModule, ShowOnDirtyErrorS
     AuthRoutingModule,
     SharedModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatIconModule,
+    MatRadioModule
   ],
   providers: [
     {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}

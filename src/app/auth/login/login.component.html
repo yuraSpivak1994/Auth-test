@@ -1,45 +1,50 @@
-<div class="row">
-
-  <div class="col-7 no-padding">
+<div class="container-general">
+  <div class="left-part">
     <div class="big-oval"></div>
     <div class="small-oval"></div>
-    <div class="left-box">
-      <div class="form-container">
-        <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="form">
-          <h1>Login</h1>
-          <span class="login-desc">If you are already a registered user,
-            please enter your email address and password in the spaces below.</span>
-          <div class="fields-container">
-          <mat-form-field class="form-element">
-            <input matInput placeholder="Email Account" formControlName="email">
-            <mat-error *ngIf="!formGroup.controls['email'].valid && formGroup.controls['email'].touched">
-              {{ getErrorEmail() }}
+    <div class="form-container">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+        <h1>Login</h1>
+        <span class="login-desc">If you are already a registered user, please enter your email address and password in the spaces below. </span>
+        <div class="email box">
+          <mat-form-field>
+            <input matInput
+                   placeholder="Email Address"
+                   formControlName="email">
+            <mat-error *ngIf="form.get('email').invalid && form.get('email').touched">
+              Enter correct email
             </mat-error>
           </mat-form-field>
-          <mat-form-field class="form-element">
-            <input matInput placeholder="Password" formControlName="password" autocomplete="off" type="password">
-            <mat-error *ngIf="!formGroup.controls['password'].valid && formGroup.controls['password'].touched">
-              {{ getErrorPassword() }}
-            </mat-error>
-          </mat-form-field>
-          <div class="form-element button">
-            <button type="submit"  class="sign-in-btn" [disabled]="!formGroup.valid">Login</button>
-          </div>
-          </div>
-        </form>
-        <button class="sign-up-btn-mob" [routerLink]="'/registration'" >Sign up</button>
-      </div>
+        </div>
+            <mat-form-field>
+              <input matInput
+                     placeholder="Password"
+                     autocomplete="off"
+                     [type]="hide ? 'password' : 'text'"
+                     [ngClass]="{'has-error': form.get('password').invalid && form.get('password').touched}"
+                     class="form-group"
+                     formControlName="password">
+              <mat-error *ngIf="form.get('password').invalid && form.get('password').touched">
+                Password cannot be empty
+              </mat-error>
+            </mat-form-field>
+        <div class="button">
+          <button
+            type="submit"
+            class="sign-in-btn"
+            [disabled]="form.invalid"
+            [ngClass]="{'btn-disabled' : form.invalid}"
+          >Login</button>
+        </div>
+      </form>
+      <button class="sign-up-btn-mob" [routerLink]="'/registration'"  >Sign up</button>
     </div>
   </div>
-
-  <div class="col-5 no-padding">
-    <div class="background-img-box">
-      <img src="../../../assets/images/login/girl-sings.png"/>
-      <div class="title_button-box">
-        <h1>Not a SOCAN Member?</h1>
-        <button class="sign-up-btn" [routerLink]="'/registration'" >Sign up</button>
-      </div>
+  <div class="right-part">
+    <img src="../../../assets/images/login/girl-sings.png"/>
+    <div class="title_button-box">
+      <h1>Not a SOCAN Member?</h1>
+      <button class="sign-up-btn" [routerLink]="'/registration'" >Log In</button>
     </div>
   </div>
-
 </div>

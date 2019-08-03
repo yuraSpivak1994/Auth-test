@@ -1,45 +1,112 @@
-<div class="row">
-
-  <div class="col-7 no-padding">
+<div class="container-general">
+  <div class="left-part">
     <div class="big-oval"></div>
     <div class="small-oval"></div>
-    <div class="left-box">
-      <div class="form-container">
-        <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="form">
-          <h1>Get Registered</h1>
-          <span class="login-desc">Welcome to SOCAN Membership Portal. Through licensing, we give businesses
-            that use your music. Join SOCAN now. It's free!</span>
-          <div class="fields-container">
-            <mat-form-field class="form-element">
-              <input matInput placeholder="Email Account" formControlName="email">
-              <mat-error *ngIf="!formGroup.controls['email'].valid && formGroup.controls['email'].touched">
-                {{ getErrorEmail() }}
+    <div class="bottom-oval"></div>
+    <div class="form-container">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+        <h1>Get Registered</h1>
+        <span class="login-desc">Welcome to SOCAN Membership Portal. Through licensing,
+          we give businesses that use your music. Join SOCAN now. It's free!</span>
+
+        <div class="row">
+          <div class="col-md-4">
+            <mat-form-field >
+              <input matInput
+                     placeholder="First Name"
+                     formControlName="firstName">
+              <mat-error *ngIf="form.get('firstName').invalid && form.get('firstName').touched">
+                Field cannot be empty
               </mat-error>
             </mat-form-field>
+          </div>
+          <div class="col-md-4">
             <mat-form-field class="form-element">
-              <input matInput placeholder="Password" formControlName="password" autocomplete="off" type="password">
-              <mat-error *ngIf="!formGroup.controls['password'].valid && formGroup.controls['password'].touched">
-                {{ getErrorPassword() }}
+              <input matInput
+                     placeholder="Middle Name (Optional)">
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field>
+              <input matInput
+                     placeholder="Last Name"
+                     formControlName="lastName">
+              <mat-error *ngIf="form.get('lastName').invalid && form.get('lastName').touched">
+                Field cannot be empty
               </mat-error>
             </mat-form-field>
-            <div class="form-element button">
-              <button type="submit"  class="sign-in-btn" [disabled]="!formGroup.valid">Get Registered</button>
+          </div>
+        </div>
+        <div class="email box">
+          <mat-form-field>
+            <input matInput
+                   placeholder="Email Address"
+                   formControlName="email">
+            <mat-error *ngIf="form.get('email').invalid && form.get('email').touched">
+              Email cannot be empty
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <div class="col-md-6 extra-space1">
+            <mat-form-field>
+              <input matInput
+                     placeholder="Password"
+                     autocomplete="off"
+                     [type]="hide ? 'password' : 'text'"
+                     [ngClass]="{'has-error': form.get('password').invalid && form.get('password').touched}"
+                     class="form-group"
+                     formControlName="password">
+              <mat-error *ngIf="form.get('password').invalid && form.get('password').touched">
+                Password cannot be empty, must contain 8 characters, 1 figure and 1 uppercase
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6 extra-space2">
+            <mat-form-field>
+              <input matInput
+                     placeholder="Password"
+                     autocomplete="off"
+                     class="form-group"
+                     [type]="hide ? 'password' : 'text'"
+              >
+            </mat-form-field>
+          </div>
+        </div>
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" class="password-toggle-btn">
+          <span *ngIf="hide">Show password</span>
+          <span *ngIf="!hide">Hide password</span>
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <div class="radio-btn-box">
+          <div class="flex-radio-box">
+              <mat-radio-button value="1">8-16 characters</mat-radio-button>
+            <mat-radio-button value="3">1 number</mat-radio-button>
+          </div>
+          <div>
+            <div class="flex-radio-box radio-btns">
+              <mat-radio-button value="2">1 letter</mat-radio-button>
+              <mat-radio-button value="4">1 special character (!@#$%*()...\\-+=)</mat-radio-button>
             </div>
           </div>
-        </form>
-        <button class="sign-up-btn-mob">Sign up</button>
-      </div>
+        </div>
+        <div class="button">
+          <button
+            type="submit"
+            class="sign-in-btn"
+            [disabled]="form.invalid"
+            [ngClass]="{'btn-disabled' : form.invalid}"
+          >Get Registered</button>
+        </div>
+      </form>
+        <button class="sign-up-btn-mob" [routerLink]="'/login'" >Sign up</button>
     </div>
   </div>
-
-  <div class="col-5 no-padding">
-    <div class="background-img-box">
-      <img src="../../../assets/images/login/man.png"/>
-      <div class="title_button-box">
-        <h1>Already a SOCAN Member?</h1>
-        <button class="sign-up-btn" [routerLink]="'/login'" >Log in </button>
-      </div>
+  <div class="right-part">
+    <img src="../../../assets/images/login/man.png"/>
+    <div class="title_button-box">
+      <h1>Already a SOCAN Member?</h1>
+      <button class="sign-up-btn" [routerLink]="'/login'" >Log In</button>
     </div>
   </div>
-
 </div>
