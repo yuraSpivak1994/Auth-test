@@ -1,9 +1,9 @@
-<div class="container-general">
+<div *ngIf="true" class="container-general">
   <div class="left-part">
     <div class="big-oval"></div>
     <div class="small-oval"></div>
     <div class="form-container">
-      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+      <form [formGroup]="form" (ngSubmit)="form.valid && login()" class="form">
         <h1>Login</h1>
         <span class="login-desc">If you are already a registered user, please enter your email address and password in the spaces below. </span>
         <div class="email box">
@@ -44,7 +44,24 @@
     <img src="../../../assets/images/login/girl-sings.png"/>
     <div class="title_button-box">
       <h1>Not a SOCAN Member?</h1>
-      <button class="sign-up-btn" [routerLink]="'/registration'" >Log In</button>
+      <button class="sign-up-btn" [routerLink]="'/registration'" >Sign up</button>
     </div>
   </div>
+</div>
+
+<div  *ngIf="false" class="container-confirm">
+<div class="message-container">
+  <img src="../../../assets/images/header/reverse.svg" alt="logo" class="logo">
+  <img src="../../../assets/images/login/confirmed.svg" alt="letter">
+  <h1>Hi, John </h1>
+  <p class="welcome-desc">Welcome to SOCAN Membership Portal</p>
+  <p class="thanks-desc">Thanks for signning up for an account with SOCAN. To continue, you need to confirm your account.
+  </p>
+  <p>Just press the button below.  </p>
+  <button class="confirm-btn">Confirm Account</button>
+</div>
+  <div class="image-background">
+    <img src="../../../assets/images/login/confirm-account.jpg"/>
+  </div>
+  <div class="white-background"></div>
 </div>

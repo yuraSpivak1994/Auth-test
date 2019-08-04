@@ -6,7 +6,7 @@ import { AuthComponent } from "./auth.component";
 import { AuthRoutingModule } from "./auth-routing.module";
 import { SharedModule } from "../shared/shared.module";
 import {
-  ErrorStateMatcher,
+  ErrorStateMatcher, MatCheckboxModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule, MatRadioModule,
@@ -26,7 +26,8 @@ import {
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatRadioModule
+    MatRadioModule,
+    MatCheckboxModule
   ],
   providers: [
     {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}

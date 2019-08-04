@@ -204,6 +204,46 @@
       }
     }
 
+    .thanks-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      max-width: 400px;
+      text-align: center;
+      margin-top: 50px;
+
+      .request {
+        font-size: 14px;
+        font-weight: 600;
+
+        a {
+          color: #D02139;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .confirmed-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      max-width: 450px;
+      text-align: center;
+      margin-top: 50px;
+
+      .request {
+        max-width: 300px;
+
+        a {
+          color: #D02139;
+          cursor: pointer;
+          font-weight: 600;
+        }
+      }
+    }
+
   }
   .right-part {
     width: 40%;

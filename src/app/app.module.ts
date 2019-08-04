@@ -6,8 +6,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AuthModule } from "./auth/auth.module";
-import { HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import {HeaderComponent} from "./header/header.component";
+import { MainInterceptor } from './interceptor/main-interceptor';
 
 @NgModule({
   declarations: [
@@ -21,9 +22,15 @@ import {HeaderComponent} from "./header/header.component";
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AuthModule,
+    AuthModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MainInterceptor,
+      multi: true
+    }
+  ],
   exports: [],
   bootstrap: [AppComponent]
 })
