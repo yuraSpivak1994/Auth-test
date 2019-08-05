@@ -9,9 +9,9 @@ import {
   ErrorStateMatcher, MatCheckboxModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule, MatRadioModule,
+  MatInputModule, MatProgressSpinnerModule, MatRadioModule,
   ShowOnDirtyErrorStateMatcher
-} from "@angular/material";
+} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,8 @@ import {
     MatInputModule,
     MatIconModule,
     MatRadioModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}

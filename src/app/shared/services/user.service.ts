@@ -11,7 +11,7 @@ export class UserService {
 
   saveUser(data) {
     const user: User = data.user;
-    const token: string = data.token;
+    const token: string = data;
     localStorage.setItem('currentUser', JSON.stringify(user));
     localStorage.setItem('token', JSON.stringify(token));
   }

@@ -8,24 +8,15 @@ import { of } from 'rxjs';
 })
 export class AuthService {
 
-  loggedUser = {
-    user: {
-      firstName: 'Yura',
-      middleName: 'Test',
-      lastName: 'Spivak',
-      email: '',
-    } as User,
-    token: 'dfkjjuwyefiv873w4fikefiyu3ui'
-  };
+  private url = 'https://devsocmemapi.socmemdevelopment.com/api/v0';
 
   constructor(private http: HttpClient) { }
 
   register(user: User) {
-    return this.http.post('/register', user);
+    return this.http.post(`${this.url}/auth-ms/createUser`, user);
   }
 
   login(user: User) {
-    this.loggedUser.user.email = user.email;
-    return of(this.loggedUser);
+    return this.http.post(`${this.url} /auth-ms/sign-in`, user);
   }
 }

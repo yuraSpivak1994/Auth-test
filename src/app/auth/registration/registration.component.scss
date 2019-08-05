@@ -43,7 +43,7 @@
       width: 380px;
       opacity: 0.17;
       border-radius: 100%;
-      position: absolute;
+      position: fixed;
       left: -50px;
       bottom: -80px;
       background: linear-gradient(0deg, #B9B9B9 0%, rgba(181, 181, 181, 0.92) 19.94%, rgba(131, 131, 131, 0.05) 100%);
@@ -52,6 +52,7 @@
     .form-container {
       margin-left: 20%;
       margin-right: 20%;
+      z-index: 35;
 
       @media screen and(max-width: 765px){
         margin-top: 180px;
@@ -125,45 +126,6 @@
 
           @media screen and(max-width: 1428px){
             padding-left: 0;
-          }
-        }
-        ::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
-          opacity: 0 !important;
-          background-color: #00B274 !important;
-        }
-
-        ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
-          background-color: #00B274!important;
-        }
-
-        ::ng-deep.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-          border-color: #00B274!important;
-        }
-
-      }
-
-      .sign-up-btn-mob {
-        display: none;
-      }
-      @media screen and(max-width: 580px) {
-        .sign-up-btn-mob {
-          display: block;
-          border-radius: 100px;
-          height: 56px;
-          font-size: 16px;
-          font-weight: 500;
-          letter-spacing: 1.07px;
-          width: 271px;
-          outline: none;
-          background-color: #FFFFFF;
-          color: black;
-          border: 2px solid #555555;
-          bottom: 0;
-          margin: 10px auto;
-
-          &:hover {
-            background: #555555;
-            color: #FFFFFF;
           }
         }
       }
@@ -247,12 +209,22 @@
   }
   .right-part {
     width: 40%;
+    height: 100vh;
     position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     right: 0;
     top: 0;
+    background-image: url("../../../assets/images/login/man.png");
+    background-size: cover;
+
 
     @media screen and(max-width: 580px) {
-      width: 0;
+      position: relative;
+      width: 100%;
+      margin-top: 550px;
+      height: 300px;
     }
 
     img {
@@ -263,16 +235,12 @@
 
     .title_button-box {
       width: 300px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
 
       @media screen and(max-width: 580px) {
-        display: none;
+        margin-top: 50px;
       }
 
       h1 {
@@ -294,6 +262,10 @@
         font-weight: 500;
         letter-spacing: 1.07px;
         outline: none;
+
+        &:hover {
+          background: #9a9a9a;
+        }
       }
     }
   }

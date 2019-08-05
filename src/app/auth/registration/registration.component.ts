@@ -6,6 +6,8 @@ import { AuthService } from "../auth.service";
 import { takeUntil } from "rxjs/operators";
 import { HttpErrorResponse } from "@angular/common/http";
 import { ClearObservable } from "../../shared/components/clearObservable";
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { UserService } from '../../shared/services/user.service';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -19,7 +21,33 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.scss']
+  styleUrls: ['./registration.component.scss'],
+  styles: [`
+  /deep/ .mat-checkbox-frame,
+  /deep/ .mat-checkbox-background {
+    border-radius: 50% !important;
+  }
+  /deep/ .mat-checkbox-checked.mat-accent .mat-checkbox-background, 
+  /deep/ .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    margin: 5px;
+      background-color: #00B274;
+  }
+
+  `],
+  animations: [
+    trigger('simpleFadeAnimation', [
+
+      state('in', style({opacity: 1})),
+
+      transition(':enter', [
+        style({opacity: 0}),
+        animate(700 )
+      ]),
+
+      transition(':leave',
+        animate(700, style({opacity: 0})))
+    ])
+  ]
 })
 
 export class RegistrationComponent extends ClearObservable implements OnInit {
@@ -28,9 +56,11 @@ export class RegistrationComponent extends ClearObservable implements OnInit {
   hide = true;
   passwordRegex = /[ !"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]/;
   matcher = new MyErrorStateMatcher();
+  showSpinner = false;
 
   constructor(private formBuilder: FormBuilder,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private userService: UserService) {
     super();
   }
 
@@ -55,6 +85,7 @@ export class RegistrationComponent extends ClearObservable implements OnInit {
       ]),
       firstName: new FormControl(null, [Validators.required]),
       lastName: new FormControl(null, [Validators.required]),
+      middleName: '',
     }, { validator: this.checkPasswords });
   }
 
@@ -80,17 +111,25 @@ export class RegistrationComponent extends ClearObservable implements OnInit {
   }
 
   onSubmit() {
+    this.showSpinner = true;
     const req: User = {};
 
     req.firstName = this.form.controls.firstName.value;
     req.middleName = this.form.controls.middleName.value;
     req.lastName = this.form.controls.lastName.value;
-    req.email = this.form.controls.email.value;
+    req.username = this.form.controls.email.value;
     req.password = this.form.controls.password.value;
+    req.hearAbout = 4;
+    req.passwordRepeat = this.form.controls.confirmPassword.value;
 
     this.authService.register(req)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => console.log(res),
-        (err: HttpErrorResponse) => console.log(err))
+      .subscribe((res) =>{
+        console.log(res);
+          this.userService.saveUser(res);
+        this.showSpinner = false},
+        (err: HttpErrorResponse) => {
+          this.showSpinner = false;
+          console.log(err)})
   }
 }

@@ -1,4 +1,7 @@
-<div *ngIf="true" class="container-general">
+<div *ngIf="true" class="container-general" [@simpleFadeAnimation]="'in'">
+  <div *ngIf="showSpinner" class="spinner-box">
+    <mat-spinner *ngIf="showSpinner"></mat-spinner>
+  </div>
   <div class="left-part">
     <div class="big-oval"></div>
     <div class="small-oval"></div>
@@ -37,18 +40,15 @@
           >Login</button>
         </div>
       </form>
-      <button class="sign-up-btn-mob" [routerLink]="'/registration'"  >Sign up</button>
     </div>
   </div>
   <div class="right-part">
-    <img src="../../../assets/images/login/girl-sings.png"/>
     <div class="title_button-box">
       <h1>Not a SOCAN Member?</h1>
       <button class="sign-up-btn" [routerLink]="'/registration'" >Sign up</button>
     </div>
   </div>
 </div>
-
 <div  *ngIf="false" class="container-confirm">
 <div class="message-container">
   <img src="../../../assets/images/header/reverse.svg" alt="logo" class="logo">
@@ -65,3 +65,6 @@
   </div>
   <div class="white-background"></div>
 </div>
+
+
+

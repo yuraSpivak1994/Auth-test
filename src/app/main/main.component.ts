@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-auth',
   templateUrl: './main.component.html',
+  styleUrls: ['./main.component.scss']
 })
 export class MainComponent extends ClearObservable implements OnInit {
   user: User = {};

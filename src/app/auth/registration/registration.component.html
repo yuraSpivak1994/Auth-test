@@ -1,10 +1,13 @@
-<div class="container-general">
+<div class="container-general"  [@simpleFadeAnimation]="'in'">
+  <div *ngIf="showSpinner" class="spinner-box">
+    <mat-spinner *ngIf="showSpinner"></mat-spinner>
+  </div>
   <div class="left-part">
     <div class="big-oval"></div>
     <div class="small-oval"></div>
     <div class="bottom-oval"></div>
     <div *ngIf="true" class="form-container">
-      <form [formGroup]="form" (ngSubmit)="form.valid && onSubmit()" class="form">
+      <form enctype="multipart/form-data" [formGroup]="form" (ngSubmit)="form.valid && onSubmit()" class="form" >
         <h1>Get Registered</h1>
         <span class="login-desc">Welcome to SOCAN Membership Portal. Through licensing,
           we give businesses that use your music. Join SOCAN now. It's free!</span>
@@ -24,7 +27,8 @@
           <div class="col-md-4">
             <mat-form-field class="form-element">
               <input matInput
-                     placeholder="Middle Name (Optional)">
+                     placeholder="Middle Name (Optional)"
+                      formControlName="middleName">
             </mat-form-field>
           </div>
           <div class="col-md-4">
@@ -117,7 +121,6 @@
           </button>
         </div>
       </form>
-      <button class="sign-up-btn-mob" [routerLink]="'/login'">Sign up</button>
     </div>
     <div *ngIf="false" class="form-container thanks-box">
       <img src="../../../assets/images/login/thanks.svg" alt="leter">
@@ -130,7 +133,7 @@
       </div>
     </div>
     <div *ngIf="false" class="form-container confirmed-box">
-      <img src="../../../assets/images/login/confirmed.svg" alt="leter">
+      <img src="../../../assets/images/login/confirmed.svg" alt="letter">
       <h1>Account Confirmed!</h1>
       <div class="request">
         <span>You successfully created an account, please <a>click here</a> to login</span>
@@ -138,7 +141,6 @@
     </div>
   </div>
   <div class="right-part">
-    <img src="../../../assets/images/login/man.png"/>
     <div class="title_button-box">
       <h1>Already a SOCAN Member?</h1>
       <button class="sign-up-btn" [routerLink]="'/login'">Log In</button>

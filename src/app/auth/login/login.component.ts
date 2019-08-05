@@ -7,16 +7,32 @@ import { takeUntil } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from '../../shared/services/user.service';
 import { Router } from '@angular/router';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  animations: [
+    trigger('simpleFadeAnimation', [
+
+      state('in', style({opacity: 1})),
+
+      transition(':enter', [
+        style({opacity: 0}),
+        animate(700 )
+      ]),
+
+      transition(':leave',
+        animate(700, style({opacity: 0})))
+    ])
+  ]
 })
 export class LoginComponent extends ClearObservable implements OnInit {
 
   form: FormGroup;
   hide = true;
+  showSpinner = false;
 
   constructor(private authService: AuthService,
               private userService: UserService,
@@ -35,17 +51,22 @@ export class LoginComponent extends ClearObservable implements OnInit {
     });
   }
   login() {
+    this.showSpinner = true;
     const req: User = {};
-    req.email = this.form.controls.email.value;
+    req.username = this.form.controls.email.value;
     req.password = this.form.controls.password.value;
 
     this.authService.login(req)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
-        this.userService.saveUser(data);
-        this.router.navigate(['/main'])
+          this.userService.saveUser(data);
+        console.log(data);
+        this.showSpinner = false;
+          this.router.navigate(['/main']);
 
-      }, (err: HttpErrorResponse) => console.log(err));
+      }, (err: HttpErrorResponse) => {
+        this.showSpinner = false;
+        console.log(err)});
   }
 
 }
