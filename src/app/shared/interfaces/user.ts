@@ -7,5 +7,4 @@ export interface User {
   passwordRepeat?: string;
   lang?: string;
   hearAbout?: number;
-  token?: string;
 }

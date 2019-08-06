@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../shared/interfaces/user';
 import { AuthService } from '../auth.service';
 import { ClearObservable } from '../../shared/components/clearObservable';
@@ -15,14 +15,11 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   styleUrls: ['./login.component.scss'],
   animations: [
     trigger('simpleFadeAnimation', [
-
       state('in', style({opacity: 1})),
-
       transition(':enter', [
         style({opacity: 0}),
-        animate(700 )
+        animate(700)
       ]),
-
       transition(':leave',
         animate(700, style({opacity: 0})))
     ])

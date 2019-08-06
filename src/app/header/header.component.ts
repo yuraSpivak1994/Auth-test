@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -7,7 +7,8 @@ import {Component, HostListener, OnInit} from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
@@ -15,14 +16,14 @@ export class HeaderComponent implements OnInit {
   @HostListener('window:scroll', ['$event'])
   onWindowScroll(e) {
     if (window.pageYOffset > 80) {
-      let element = document.getElementById('navbar');
-      let btn = document.getElementById('btn');
+      const element = document.getElementById('navbar');
+      const btn = document.getElementById('btn');
       element.classList.add('sticky');
       btn.classList.add('red-lang');
     } else {
-      let element = document.getElementById('navbar');
+      const element = document.getElementById('navbar');
       element.classList.remove('sticky');
-      let btn = document.getElementById('btn');
+      const btn = document.getElementById('btn');
       btn.classList.remove('red-lang');
     }
   }

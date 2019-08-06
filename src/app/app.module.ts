@@ -4,10 +4,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { AuthModule } from "./auth/auth.module";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthModule } from './auth/auth.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import {HeaderComponent} from "./header/header.component";
+import { HeaderComponent } from './header/header.component';
 import { MainInterceptor } from './interceptor/main-interceptor';
 
 @NgModule({
@@ -33,4 +33,5 @@ import { MainInterceptor } from './interceptor/main-interceptor';
   exports: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

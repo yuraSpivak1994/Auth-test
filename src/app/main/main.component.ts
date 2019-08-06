@@ -1,8 +1,6 @@
-import {Component, OnInit} from "@angular/core";
-import {Router} from "@angular/router";
-import { UserService } from '../shared/services/user.service';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ClearObservable } from '../shared/components/clearObservable';
-
 
 @Component({
   selector: 'app-auth',

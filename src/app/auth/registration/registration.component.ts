@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from "@angular/forms";
-import { ErrorStateMatcher } from "@angular/material";
-import { User } from "../../shared/interfaces/user";
-import { AuthService } from "../auth.service";
-import { takeUntil } from "rxjs/operators";
-import { HttpErrorResponse } from "@angular/common/http";
-import { ClearObservable } from "../../shared/components/clearObservable";
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material';
+import { User } from '../../shared/interfaces/user';
+import { AuthService } from '../auth.service';
+import { takeUntil } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ClearObservable } from '../../shared/components/clearObservable';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { UserService } from '../../shared/services/user.service';
 import { Router } from '@angular/router';
@@ -24,15 +24,16 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss'],
   styles: [`
-  /deep/ .mat-checkbox-frame,
-  /deep/ .mat-checkbox-background {
-    border-radius: 50% !important;
-  }
-  /deep/ .mat-checkbox-checked.mat-accent .mat-checkbox-background,
-  /deep/ .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
-    margin: 5px;
-      background-color: #00B274;
-  }
+      /deep/ .mat-checkbox-frame,
+      /deep/ .mat-checkbox-background {
+          border-radius: 50% !important;
+      }
+
+      /deep/ .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+      /deep/ .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+          margin: 5px;
+          background-color: #00B274;
+      }
 
   `],
   animations: [
@@ -42,7 +43,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 
       transition(':enter', [
         style({opacity: 0}),
-        animate(700 )
+        animate(700)
       ]),
 
       transition(':leave',
@@ -89,12 +90,12 @@ export class RegistrationComponent extends ClearObservable implements OnInit {
       firstName: new FormControl(null, [Validators.required]),
       lastName: new FormControl(null, [Validators.required]),
       middleName: '',
-    }, { validator: this.checkPasswords });
+    }, {validator: this.checkPasswords});
   }
 
   checkLengthPassword() {
     return this.form.get('password').value.length >= 8
-    && this.form.get('password').value.length <= 16;
+      && this.form.get('password').value.length <= 16;
   }
 
   checkPasswords(group: FormGroup) {
@@ -115,10 +116,6 @@ export class RegistrationComponent extends ClearObservable implements OnInit {
 
   validateLastName() {
     return this.form.get('lastName').invalid && this.form.get('lastName').touched;
-  }
-
-  validateEmail() {
-    return this.form.get('email').invalid && this.form.get('email').touched;
   }
 
   passwordHasLetter(password: string) {
