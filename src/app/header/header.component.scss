@@ -9,12 +9,7 @@
 
   .logo {
     width: 120px;
-    height: 43px;
     margin: 20px 0 0 34px;
-    display: flex;
-    flex-direction: column;
-    background-image: url('../../assets/images/header/reverse.svg');
-    background-size: cover;
 
     @media screen and(max-width: 330px) {
       margin-left: 5px;
@@ -38,13 +33,12 @@
     font-size: 16px;
     font-weight: 500;
     background: rgba(0, 178, 116, 0);
-    padding-bottom: 2px;
     outline: none;
     cursor: pointer;
 
     &:hover {
-      border-color: #9a9a9a;
-      color: #9a9a9a;
+      border-color: #ffffff;
+      background: #9a9a9a;
     }
 
     @media screen and(max-width: 580px) {

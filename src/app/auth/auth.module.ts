@@ -9,7 +9,7 @@ import {
   ErrorStateMatcher, MatCheckboxModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule, MatProgressSpinnerModule, MatRadioModule,
+  MatInputModule, MatProgressSpinnerModule,
   ShowOnDirtyErrorStateMatcher
 } from '@angular/material';
 
@@ -26,7 +26,6 @@ import {
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatRadioModule,
     MatCheckboxModule,
     MatProgressSpinnerModule
   ],

@@ -8,6 +8,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { ClearObservable } from "../../shared/components/clearObservable";
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { UserService } from '../../shared/services/user.service';
+import { Router } from '@angular/router';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -27,7 +28,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   /deep/ .mat-checkbox-background {
     border-radius: 50% !important;
   }
-  /deep/ .mat-checkbox-checked.mat-accent .mat-checkbox-background, 
+  /deep/ .mat-checkbox-checked.mat-accent .mat-checkbox-background,
   /deep/ .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
     margin: 5px;
       background-color: #00B274;
@@ -54,13 +55,15 @@ export class RegistrationComponent extends ClearObservable implements OnInit {
 
   form: FormGroup;
   hide = true;
+  errorToggle = false;
   passwordRegex = /[ !"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]/;
   matcher = new MyErrorStateMatcher();
   showSpinner = false;
 
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
-              private userService: UserService) {
+              private userService: UserService,
+              private router: Router) {
     super();
   }
 
@@ -89,11 +92,16 @@ export class RegistrationComponent extends ClearObservable implements OnInit {
     }, { validator: this.checkPasswords });
   }
 
-  checkPasswords(group: FormGroup) {
-    let pass = group.controls.password.value;
-    let confirmPass = group.controls.confirmPassword.value;
+  checkLengthPassword() {
+    return this.form.get('password').value.length >= 8
+    && this.form.get('password').value.length <= 16;
+  }
 
-    return pass === confirmPass ? null : { notSame: true }
+  checkPasswords(group: FormGroup) {
+    const pass = group.controls.password.value;
+    const confirmPass = group.controls.confirmPassword.value;
+
+    return pass === confirmPass ? null : {notSame: true};
   }
 
   passwordHasNumber(password: string) {
@@ -101,8 +109,20 @@ export class RegistrationComponent extends ClearObservable implements OnInit {
     return validator.test(password);
   }
 
+  validateFirstName() {
+    return this.form.get('firstName').invalid && this.form.get('firstName').touched;
+  }
+
+  validateLastName() {
+    return this.form.get('lastName').invalid && this.form.get('lastName').touched;
+  }
+
+  validateEmail() {
+    return this.form.get('email').invalid && this.form.get('email').touched;
+  }
+
   passwordHasLetter(password: string) {
-    const validator = /[a-zA-Z]/;
+    const validator = /[A-Z]/;
     return validator.test(password);
   }
 
@@ -111,25 +131,30 @@ export class RegistrationComponent extends ClearObservable implements OnInit {
   }
 
   onSubmit() {
-    this.showSpinner = true;
-    const req: User = {};
+    if (this.form.valid) {
+      this.showSpinner = true;
+      const req: User = {};
 
-    req.firstName = this.form.controls.firstName.value;
-    req.middleName = this.form.controls.middleName.value;
-    req.lastName = this.form.controls.lastName.value;
-    req.username = this.form.controls.email.value;
-    req.password = this.form.controls.password.value;
-    req.hearAbout = 4;
-    req.passwordRepeat = this.form.controls.confirmPassword.value;
+      req.firstName = this.form.controls.firstName.value;
+      req.middleName = this.form.controls.middleName.value;
+      req.lastName = this.form.controls.lastName.value;
+      req.username = this.form.controls.email.value;
+      req.password = this.form.controls.password.value;
+      req.hearAbout = 4;
+      req.passwordRepeat = this.form.controls.confirmPassword.value;
 
-    this.authService.register(req)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((res) =>{
-        console.log(res);
-          this.userService.saveUser(res);
-        this.showSpinner = false},
-        (err: HttpErrorResponse) => {
-          this.showSpinner = false;
-          console.log(err)})
+      this.authService.register(req)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((res) => {
+            this.userService.saveUser(res);
+            this.showSpinner = false;
+            this.router.navigate(['/main']);
+          },
+          (err: HttpErrorResponse) => {
+            this.errorToggle = true;
+            this.showSpinner = false;
+            console.log(err);
+          });
+    }
   }
 }

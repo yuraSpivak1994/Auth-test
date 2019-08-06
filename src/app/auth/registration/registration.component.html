@@ -7,19 +7,17 @@
     <div class="small-oval"></div>
     <div class="bottom-oval"></div>
     <div *ngIf="true" class="form-container">
-      <form enctype="multipart/form-data" [formGroup]="form" (ngSubmit)="form.valid && onSubmit()" class="form" >
+      <form enctype="multipart/form-data" [formGroup]="form" (ngSubmit)="onSubmit()" class="form" >
         <h1>Get Registered</h1>
         <span class="login-desc">Welcome to SOCAN Membership Portal. Through licensing,
           we give businesses that use your music. Join SOCAN now. It's free!</span>
-
         <div class="row">
           <div class="col-md-4">
             <mat-form-field>
               <input matInput
                      placeholder="First Name"
-                     formControlName="firstName"
-              >
-              <mat-error *ngIf="form.get('firstName').invalid && form.get('firstName').touched">
+                     formControlName="firstName">
+              <mat-error *ngIf="validateFirstName()">
                 Field cannot be empty
               </mat-error>
             </mat-form-field>
@@ -35,11 +33,10 @@
             <mat-form-field>
               <input matInput
                      placeholder="Last Name"
-                     formControlName="lastName"
-              >
-              <!--              <mat-error *ngIf="form.get('lastName').invalid && form.get('lastName').touched">-->
-              <!--                Field cannot be empty-->
-              <!--              </mat-error>-->
+                     formControlName="lastName">
+              <mat-error *ngIf="validateLastName()">
+                Field cannot be empty
+              </mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -48,11 +45,7 @@
             <input matInput
                    placeholder="Email Address"
                    formControlName="email"
-
             >
-            <!--            <mat-error *ngIf="form.get('email').invalid && form.get('email').touched">-->
-            <!--              Email cannot be empty-->
-            <!--            </mat-error>-->
           </mat-form-field>
         </div>
         <div class="row">
@@ -64,11 +57,7 @@
                      maxlength="16"
                      [type]="hide ? 'password' : 'text'"
                      class="form-group"
-                     formControlName="password"
-              >
-              <!--              <mat-error *ngIf="form.get('password').invalid && form.get('password').touched">-->
-              <!--                Password cannot be empty, must contain 8 characters, 1 figure and 1 uppercase-->
-              <!--              </mat-error>-->
+                     formControlName="password">
             </mat-form-field>
           </div>
           <div class="col-md-6 extra-space2">
@@ -86,19 +75,16 @@
           </div>
         </div>
         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                [attr.aria-pressed]="hide" class="password-toggle-btn">
+                [attr.aria-pressed]="hide" class="password-toggle-btn" type="button">
           <span *ngIf="hide">Show password</span>
           <span *ngIf="!hide">Hide password</span>
           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
         <div class="radio-btn-box">
           <div class="flex-radio-box">
-            <mat-checkbox [checked]="form.get('password').value.length >= 8
-                          && form.get('password').value.length <= 16">8-16 characters
+            <mat-checkbox [checked]="checkLengthPassword()">8-16 characters
             </mat-checkbox>
             <mat-checkbox [checked]="passwordHasNumber(form.get('password').value)">1 number</mat-checkbox>
-            <!--              <mat-radio-button value="1">8-16 characters</mat-radio-button>-->
-            <!--            <mat-radio-button value="3">1 number</mat-radio-button>-->
           </div>
           <div>
             <div class="flex-radio-box radio-btns">
@@ -106,8 +92,6 @@
               <mat-checkbox [checked]="passwordHasSpecialSymbol(form.get('password').value)">1 special character
                 (!@#$%*()...\\-+=)
               </mat-checkbox>
-              <!--              <mat-radio-button value="2">1 letter</mat-radio-button>-->
-              <!--              <mat-radio-button value="4">1 special character (!@#$%*()...\\-+=)</mat-radio-button>-->
             </div>
           </div>
         </div>
@@ -138,6 +122,14 @@
       <div class="request">
         <span>You successfully created an account, please <a>click here</a> to login</span>
       </div>
+    </div>
+    <div *ngIf="errorToggle" class="form-container error-box">
+      <img src="../../../assets/images/login/error.svg" alt="leter">
+      <h1>Error</h1>
+      <p>Sorry, the username or password you
+        provided are not valid. Please provide correct username and password and try again
+      </p>
+      <button class="error-btn" [routerLink]="['/login']">Go Back</button>
     </div>
   </div>
   <div class="right-part">

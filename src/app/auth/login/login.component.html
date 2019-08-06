@@ -6,7 +6,7 @@
     <div class="big-oval"></div>
     <div class="small-oval"></div>
     <div class="form-container">
-      <form [formGroup]="form" (ngSubmit)="form.valid && login()" class="form">
+      <form [formGroup]="form" (ngSubmit)="login()" class="form">
         <h1>Login</h1>
         <span class="login-desc">If you are already a registered user, please enter your email address and password in the spaces below. </span>
         <div class="email box">
@@ -14,30 +14,31 @@
             <input matInput
                    placeholder="Email Address"
                    formControlName="email">
-            <mat-error *ngIf="form.get('email').invalid && form.get('email').touched">
+            <mat-error *ngIf="validateEmail()">
               Enter correct email
             </mat-error>
           </mat-form-field>
         </div>
-            <mat-form-field>
-              <input matInput
-                     placeholder="Password"
-                     autocomplete="off"
-                     [type]="hide ? 'password' : 'text'"
-                     [ngClass]="{'has-error': form.get('password').invalid && form.get('password').touched}"
-                     class="form-group"
-                     formControlName="password">
-              <mat-error *ngIf="form.get('password').invalid && form.get('password').touched">
-                Password cannot be empty
-              </mat-error>
-            </mat-form-field>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Password"
+                 autocomplete="off"
+                 [type]="hide ? 'password' : 'text'"
+                 [ngClass]="{'has-error': validatePassword()}"
+                 class="form-group"
+                 formControlName="password">
+          <mat-error *ngIf="validatePassword()">
+            Password cannot be empty
+          </mat-error>
+        </mat-form-field>
         <div class="button">
           <button
             type="submit"
             class="sign-in-btn"
             [disabled]="form.invalid"
             [ngClass]="{'btn-disabled' : form.invalid}"
-          >Login</button>
+          >Login
+          </button>
         </div>
       </form>
     </div>
@@ -45,7 +46,7 @@
   <div class="right-part">
     <div class="title_button-box">
       <h1>Not a SOCAN Member?</h1>
-      <button class="sign-up-btn" [routerLink]="'/registration'" >Sign up</button>
+      <button class="sign-up-btn" [routerLink]="'/registration'">Sign up</button>
     </div>
   </div>
 </div>
@@ -65,6 +66,4 @@
   </div>
   <div class="white-background"></div>
 </div>
-
-
 

@@ -9,7 +9,6 @@ import { AuthModule } from "./auth/auth.module";
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import {HeaderComponent} from "./header/header.component";
 import { MainInterceptor } from './interceptor/main-interceptor';
-import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [

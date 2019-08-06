@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { User } from "../shared/interfaces/user";
-import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +16,7 @@ export class AuthService {
   }
 
   login(user: User) {
-    return this.http.post(`${this.url} /auth-ms/sign-in`, user);
+    return this.http.post(`${this.url}/auth-ms/sign-in`, user);
   }
+
 }

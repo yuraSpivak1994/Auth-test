@@ -50,23 +50,34 @@ export class LoginComponent extends ClearObservable implements OnInit {
       password: new FormControl(null, [Validators.required])
     });
   }
-  login() {
-    this.showSpinner = true;
-    const req: User = {};
-    req.username = this.form.controls.email.value;
-    req.password = this.form.controls.password.value;
 
-    this.authService.login(req)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data) => {
-          this.userService.saveUser(data);
-        console.log(data);
-        this.showSpinner = false;
-          this.router.navigate(['/main']);
-
-      }, (err: HttpErrorResponse) => {
-        this.showSpinner = false;
-        console.log(err)});
+  private validatePassword() {
+    return this.form.get('password').invalid && this.form.get('password').touched;
   }
 
+  private validateEmail() {
+    return this.form.get('email').invalid && this.form.get('email').touched;
+  }
+
+  login() {
+    if (this.form.valid) {
+      this.showSpinner = true;
+      const req: User = {};
+      req.username = this.form.controls.email.value;
+      req.password = this.form.controls.password.value;
+
+      this.authService.login(req)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((data) => {
+          this.userService.saveUser(data);
+          this.showSpinner = false;
+          this.router.navigate(['/main']);
+
+        }, (err: HttpErrorResponse) => {
+          this.showSpinner = false;
+          console.log(err);
+          this.initLoginForm();
+        });
+    }
+  }
 }

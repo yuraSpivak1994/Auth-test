@@ -1,10 +1,8 @@
 import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
-import { User } from '../shared/interfaces/user';
 import { UserService } from '../shared/services/user.service';
 import { ClearObservable } from '../shared/components/clearObservable';
-import { takeUntil } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-auth',
@@ -12,14 +10,13 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent extends ClearObservable implements OnInit {
-  user: User = {};
-  constructor(private router: Router,
-              private userService: UserService) {
+
+
+  constructor(private router: Router) {
     super();
   }
 
   ngOnInit(): void {
-    this.user = this.userService.getUser();
   }
 
   logout() {
@@ -27,13 +24,4 @@ export class MainComponent extends ClearObservable implements OnInit {
     this.router.navigate(['']);
   }
 
-  testInterceptor() {
-    this.userService.testIntercepror()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => {
-        console.log('testInterceptor', res);
-      }, (err: HttpErrorResponse) => {
-        console.log('testInterceptor', err);
-      })
-  }
 }

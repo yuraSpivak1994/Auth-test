@@ -1,16 +1,4 @@
 <router-outlet></router-outlet>
-
-
-<div *ngIf="user" class="user">
-  <ol>
-    <li>{{user.firstName}}</li>
-    <li>{{user.lastName}}</li>
-    <li>{{user.email}}</li>
-  </ol>
-</div>
-
-
 <div>
   <button (click)="logout()" type="button">Logout</button>
-  <button (click)="testInterceptor()" type="button">test Intercepror</button>
 </div>
