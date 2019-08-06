@@ -57,6 +57,8 @@ export class RegistrationComponent extends ClearObservable implements OnInit {
   form: FormGroup;
   hide = true;
   errorToggle = false;
+  toggleSuccess = false;
+  togglePage = true;
   passwordRegex = /[ !"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]/;
   matcher = new MyErrorStateMatcher();
   showSpinner = false;
@@ -127,6 +129,11 @@ export class RegistrationComponent extends ClearObservable implements OnInit {
     return this.passwordRegex.test(password);
   }
 
+  hideError() {
+    this.togglePage = true;
+    this.errorToggle = false;
+  }
+
   onSubmit() {
     if (this.form.valid) {
       this.showSpinner = true;
@@ -143,12 +150,13 @@ export class RegistrationComponent extends ClearObservable implements OnInit {
       this.authService.register(req)
         .pipe(takeUntil(this.destroy$))
         .subscribe((res) => {
-            this.userService.saveUser(res);
             this.showSpinner = false;
-            this.router.navigate(['/main']);
+            this.toggleSuccess = true;
+            this.togglePage = false;
           },
           (err: HttpErrorResponse) => {
             this.errorToggle = true;
+            this.togglePage = false;
             this.showSpinner = false;
             console.log(err);
           });

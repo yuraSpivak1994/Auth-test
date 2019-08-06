@@ -5,7 +5,15 @@
   <div class="left-part">
     <div class="big-oval"></div>
     <div class="small-oval"></div>
-    <div class="form-container">
+    <div *ngIf="errorToggle" class="form-container error-box">
+      <img src="../../../assets/images/login/error.svg" alt="leter">
+      <h1>Error</h1>
+      <p>Sorry, the username or password you
+        provided are not valid. Please provide correct username and password and try again
+      </p>
+      <button class="error-btn"  (click)="hideError()">Go Back</button>
+    </div>
+    <div  *ngIf="togglePage" class="form-container">
       <form [formGroup]="form" (ngSubmit)="login()" class="form">
         <h1>Login</h1>
         <span class="login-desc">If you are already a registered user, please enter your email address and password in the spaces below. </span>

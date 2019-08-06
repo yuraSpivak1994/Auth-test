@@ -17,7 +17,7 @@ export class AuthService {
   }
 
   login(user: User) {
-    return this.http.post(`${this.url}/auth-ms/sign-in`, user);
+    return this.http.post(`${this.url}/auth-ms/sign-in`, user,  {observe: 'response'});
   }
 
 }

@@ -6,7 +6,7 @@
     <div class="big-oval"></div>
     <div class="small-oval"></div>
     <div class="bottom-oval"></div>
-    <div *ngIf="true" class="form-container">
+    <div *ngIf="togglePage" class="form-container">
       <form enctype="multipart/form-data" [formGroup]="form" (ngSubmit)="onSubmit()" class="form" >
         <h1>Get Registered</h1>
         <span class="login-desc">Welcome to SOCAN Membership Portal. Through licensing,
@@ -106,7 +106,7 @@
         </div>
       </form>
     </div>
-    <div *ngIf="false" class="form-container thanks-box">
+    <div *ngIf="toggleSuccess" class="form-container thanks-box">
       <img src="../../../assets/images/login/thanks.svg" alt="leter">
       <h1>Thank You!</h1>
       <p>Registration successfully created! We have sent you a comfirmation email. Please check you inbox to comfirm
@@ -129,7 +129,7 @@
       <p>Sorry, the username or password you
         provided are not valid. Please provide correct username and password and try again
       </p>
-      <button class="error-btn" [routerLink]="['/login']">Go Back</button>
+      <button class="error-btn"  (click)="hideError()">Go Back</button>
     </div>
   </div>
   <div class="right-part">

@@ -4,7 +4,7 @@ import { User } from '../../shared/interfaces/user';
 import { AuthService } from '../auth.service';
 import { ClearObservable } from '../../shared/components/clearObservable';
 import { takeUntil } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { UserService } from '../../shared/services/user.service';
 import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -30,6 +30,8 @@ export class LoginComponent extends ClearObservable implements OnInit {
   form: FormGroup;
   hide = true;
   showSpinner = false;
+  errorToggle = false;
+  togglePage = true;
 
   constructor(private authService: AuthService,
               private userService: UserService,
@@ -39,6 +41,11 @@ export class LoginComponent extends ClearObservable implements OnInit {
 
   ngOnInit() {
     this.initLoginForm();
+  }
+
+  hideError() {
+    this.togglePage = true;
+    this.errorToggle = false;
   }
 
   private initLoginForm() {
@@ -66,15 +73,20 @@ export class LoginComponent extends ClearObservable implements OnInit {
       this.authService.login(req)
         .pipe(takeUntil(this.destroy$))
         .subscribe((data) => {
+          const token = data.headers.get('authorization');
+          console.log(token)
           this.userService.saveUser(data);
+          console.log(data);
           this.showSpinner = false;
           this.router.navigate(['/main']);
 
         }, (err: HttpErrorResponse) => {
           this.showSpinner = false;
           console.log(err);
-          this.initLoginForm();
+          this.errorToggle = true;
+          this.togglePage = false;
         });
     }
   }
+
 }

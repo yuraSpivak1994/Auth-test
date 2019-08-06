@@ -167,41 +167,6 @@
       }
     }
 
-    .thanks-box, .error-box {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      max-width: 400px;
-      text-align: center;
-      margin-top: 50px;
-
-      .request {
-        font-size: 14px;
-        font-weight: 600;
-
-        a {
-          color: #D02139;
-          cursor: pointer;
-        }
-      }
-      .error-btn {
-        width: 150px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background:  #00B274;
-        flex-direction: row-reverse;
-        color: #ffffff;
-        padding: 12px 24px;
-        border-radius: 100px;
-
-        &:hover {
-          background: rgba(0, 178, 116, 0.58);;
-        }
-      }
-
-    }
 
     .confirmed-box {
       display: flex;
