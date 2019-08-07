@@ -4,7 +4,7 @@ import { User } from '../../shared/interfaces/user';
 import { AuthService } from '../auth.service';
 import { ClearObservable } from '../../shared/components/clearObservable';
 import { takeUntil } from 'rxjs/operators';
-import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from '../../shared/services/user.service';
 import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -48,18 +48,18 @@ export class LoginComponent extends ClearObservable implements OnInit {
     this.errorToggle = false;
   }
 
-  private initLoginForm() {
+   initLoginForm() {
     this.form = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]),
       password: new FormControl(null, [Validators.required])
     });
   }
 
-  private validatePassword() {
+   validatePassword() {
     return this.form.get('password').invalid && this.form.get('password').touched;
   }
 
-  private validateEmail() {
+   validateEmail() {
     return this.form.get('email').invalid && this.form.get('email').touched;
   }
 
@@ -88,5 +88,4 @@ export class LoginComponent extends ClearObservable implements OnInit {
         });
     }
   }
-
 }

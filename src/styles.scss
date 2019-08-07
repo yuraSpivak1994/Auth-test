@@ -43,6 +43,10 @@ router-outlet ~ * {
   cursor: not-allowed;
   background-color: rgba(0, 178, 116, 0.52) !important;
 }
+.btn-disabled-error {
+  cursor: not-allowed;
+  background-color: rgba(255, 0, 0, 0.52) !important;
+}
 .sticky {
   background: #fff;
   box-shadow: 0 3px 12px 0 rgba(0,0,0,.08);
@@ -64,6 +68,22 @@ router-outlet ~ * {
 
   &:hover {
     background: rgba(0, 178, 116, 0.58);;
+  }
+}
+
+.error-btn-error {
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 0, 0, 0.3);
+  flex-direction: row-reverse;
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 100px;
+
+  &:hover {
+    background: rgba(255, 0, 0, 0.58);;
   }
 }
 .thanks-box, .error-box {

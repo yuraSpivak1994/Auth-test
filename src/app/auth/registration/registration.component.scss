@@ -79,6 +79,9 @@
         display: flex;
         justify-content: center;
 
+        @media screen and(max-width: 900px){
+         flex-direction: column;
+        }
         .sign-in-btn {
           border-radius: 100px;
           height: 56px;
@@ -90,6 +93,10 @@
           width: 271px;
           margin: 25px 0;
           outline: none;
+        }
+
+        .error {
+          background: #D02139;
         }
       }
 
@@ -198,7 +205,6 @@
     align-items: center;
     right: 0;
     top: 0;
-    background-image: url("../../../assets/images/login/man.png");
     background-size: cover;
 
 

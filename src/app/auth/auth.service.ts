@@ -16,6 +16,10 @@ export class AuthService {
     return this.http.post(`${this.url}/auth-ms/createUser`, user);
   }
 
+  registerError(user: User) {
+    return this.http.post(`${this.url}/auth-ms/createUserError`, user);
+  }
+
   login(user: User) {
     return this.http.post(`${this.url}/auth-ms/sign-in`, user,  {observe: 'response'});
   }

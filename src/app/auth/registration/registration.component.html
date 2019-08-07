@@ -103,11 +103,17 @@
             [ngClass]="{'btn-disabled' : form.invalid}"
           >Get Registered
           </button>
+          <button type="button"
+                  (click)="showError()"
+                  class="sign-in-btn error"
+                  [disabled]="form.invalid"
+                  [ngClass]="{'btn-disabled-error' : form.invalid}">Get Error
+          </button>
         </div>
       </form>
     </div>
     <div *ngIf="toggleSuccess" class="form-container thanks-box">
-      <img src="../../../assets/images/login/thanks.svg" alt="leter">
+      <img src="assets/images/login/thanks.svg" alt="leter">
       <h1>Thank You!</h1>
       <p>Registration successfully created! We have sent you a comfirmation email. Please check you inbox to comfirm
         your account.</p>
@@ -117,14 +123,14 @@
       </div>
     </div>
     <div *ngIf="false" class="form-container confirmed-box">
-      <img src="../../../assets/images/login/confirmed.svg" alt="letter">
+      <img src="assets/images/login/confirmed.svg" alt="letter">
       <h1>Account Confirmed!</h1>
       <div class="request">
         <span>You successfully created an account, please <a>click here</a> to login</span>
       </div>
     </div>
     <div *ngIf="errorToggle" class="form-container error-box">
-      <img src="../../../assets/images/login/error.svg" alt="leter">
+      <img src="assets/images/login/error.svg" alt="leter">
       <h1>Error</h1>
       <p>Sorry, the username or password you
         provided are not valid. Please provide correct username and password and try again
@@ -132,7 +138,7 @@
       <button class="error-btn"  (click)="hideError()">Go Back</button>
     </div>
   </div>
-  <div class="right-part">
+  <div class="right-part" style="background-image: url('assets/images/login/man.png')">
     <div class="title_button-box">
       <h1>Already a SOCAN Member?</h1>
       <button class="sign-up-btn" [routerLink]="'/login'">Log In</button>
