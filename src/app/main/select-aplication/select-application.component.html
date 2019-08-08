@@ -1,4 +1,4 @@
-<div class="container-general">
+<div class="container-general"  [@simpleFadeAnimation]="'in'">
   <div *ngIf="false" class="spinner-box">
     <mat-spinner></mat-spinner>
   </div>
@@ -24,29 +24,29 @@
             <span>Songwriter / </span>
             <span>Composer / Lyricist</span>
           </div>
-          <button type="button" class="continue-btn">Continue</button>
+          <button type="button" class="continue-btn" [routerLink]="['/main/creator/personal']">Continue</button>
         </div>
         <div class="col-md-3 card">
           <img src="assets/images/login/melody.svg" alt="melody">
           <div class="titles">
             <span>Music</span>
-            <span>Creator</span>
+            <span>Publisher</span>
           </div>
           <div class="descriptions">
-            <span>Songwriter / </span>
-            <span>Composer / Lyricist</span>
+            <span>Self-Publisher / </span>
+            <span>Publishing Company</span>
           </div>
           <button type="button" class="continue-btn">Continue</button>
         </div>
         <div class="col-md-3 card">
           <img src="assets/images/login/disk.svg" alt="round">
           <div class="titles">
-            <span>Music</span>
-            <span>Creator</span>
+            <span>Authorized</span>
+            <span>Representative</span>
           </div>
           <div class="descriptions">
-            <span>Songwriter / </span>
-            <span>Composer / Lyricist</span>
+            <span>Representative of one</span>
+            <span> or more Music Creator</span>
           </div>
           <button type="button" class="continue-btn">Continue</button>
         </div>

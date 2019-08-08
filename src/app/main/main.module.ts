@@ -6,6 +6,7 @@ import { MainRoutingModule } from './main-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { SelectApplicationComponent } from './select-aplication/select-application.component';
 import { MatProgressSpinnerModule } from '@angular/material';
+import { MusicCreatorModule } from './music-creator/music-creator.module';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { MatProgressSpinnerModule } from '@angular/material';
     RouterModule,
     MainRoutingModule,
     SharedModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MusicCreatorModule
   ],
   declarations: [MainComponent, SelectApplicationComponent],
   providers: []

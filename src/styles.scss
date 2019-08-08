@@ -34,11 +34,7 @@ h1 {
   margin-block-start: 0;
   margin-block-end: 0;
 }
-router-outlet ~ * {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-}
+
 .btn-disabled {
   cursor: not-allowed;
   background-color: rgba(0, 178, 116, 0.52) !important;

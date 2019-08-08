@@ -1,0 +1,124 @@
+  <div *ngIf="togglePage" class="form-container" [@simpleFadeAnimation]="'in'">
+    <form enctype="multipart/form-data" [formGroup]="form" (ngSubmit)="onSubmit()" class="form" >
+      <h3>Music Creator Application</h3>
+      <h1>Personal Information</h1>
+      <span class="login-desc">Please provide some additional profile information to start your application:</span>
+      <span class="contact-info-desc"> Personal Information</span>
+      <div class="container-padding">
+        <div class="row">
+          <div class="col-md-6 extra-space3">
+            <mat-form-field>
+              <input matInput
+                     placeholder="First Name"
+                     formControlName="firstName">
+              <mat-error *ngIf="validateFirstName()">
+                Field cannot be empty
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6 extra-space4">
+            <mat-form-field class="form-element">
+              <input matInput
+                     placeholder="Middle Name (Optional)"
+                     formControlName="middleName">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field>
+              <input matInput
+                     placeholder="First Name"
+                     formControlName="firstName">
+              <mat-error *ngIf="validateFirstName()">
+                Field cannot be empty
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="mat-datepicker">
+              <input matInput [matDatepicker]="picker" placeholder="Choose a date" md-select-on-focus>
+              <mat-datepicker-toggle matSuffix [for]="picker" class="toggle-btn-piker">
+                <mat-icon matDatepickerToggleIcon>
+                  <div class="calendar-icon"  style="background-image: url('assets/images/login/calendar-icon.png')"></div>
+                </mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <span class="contact-info-desc">Contact Information</span>
+      <div class="container-padding">
+        <div class="row">
+          <div class="col-md-6 extra-space3">
+            <mat-form-field>
+              <input matInput
+                     placeholder="Password"
+                     autocomplete="off"
+                     maxlength="16"
+                     [type]="hide ? 'password' : 'text'"
+                     class="form-group"
+                     formControlName="password">
+            </mat-form-field>
+          </div>
+          <div class="col-md-6 extra-space4">
+            <mat-form-field>
+              <input matInput
+                     placeholder="Repeat Password"
+                     class="form-group"
+                     formControlName="confirmPassword">
+              <mat-error *ngIf="form.hasError('notSame')">
+                Passwords do not match
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="email box">
+          <mat-form-field>
+            <input matInput
+                   placeholder="Email Address"
+                   formControlName="email"
+            >
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <div class="col-md-6 extra-space3">
+            <mat-form-field>
+              <input matInput
+                     placeholder="Password"
+                     autocomplete="off"
+                     maxlength="16"
+                     [type]="hide ? 'password' : 'text'"
+                     class="form-group"
+                     formControlName="password">
+            </mat-form-field>
+          </div>
+          <div class="col-md-6 extra-space4">
+            <mat-form-field>
+              <input matInput
+                     placeholder="Repeat Password"
+                     class="form-group"
+                     formControlName="confirmPassword">
+              <mat-error *ngIf="form.hasError('notSame')">
+                Passwords do not match
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="agree-box">
+        <mat-checkbox>I agree to SOCAN's <a>Terms & Conditions</a> of Membership.</mat-checkbox>
+      </div>
+      <div class="btn-container">
+        <button [routerLink]="['/main']" class="back-to-apps-btn">Back to Application Type</button>
+        <button [routerLink]="['/main/creator/uploader']" class="continue-btn">Continue</button>
+      </div>
+    </form>
+
+  </div>
+
+
+

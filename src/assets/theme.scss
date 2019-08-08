@@ -51,8 +51,7 @@
     }
 
     .form-container {
-      margin-left: 20%;
-      margin-right: 20%;
+
       z-index: 35;
 
       @media screen and(max-width: 765px){
@@ -234,11 +233,24 @@
 .col-md-4, .col-md-6 {
   padding: 0;
 }
+
 .extra-space1 {
   padding-right: 5px;
 }
 .extra-space2 {
   padding-left: 5px;
+}
+.extra-space3 {
+  padding-right: 15px;
+}
+.extra-space4 {
+  padding-left: 15px;
+}
+
+@media screen and (max-width: 767px){
+  .extra-space1, .extra-space2,  .extra-space3, .extra-space4 {
+    padding: 0;
+  }
 }
 
 .spinner-box {
