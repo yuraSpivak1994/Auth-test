@@ -57,9 +57,6 @@
       @media screen and(max-width: 765px){
         margin-top: 180px;
 
-        @media screen and(max-width: 580px){
-          margin-top: 380px;
-        }
       }
 
       h1 {
@@ -81,6 +78,7 @@
         @media screen and(max-width: 900px){
           flex-direction: column;
         }
+
         .sign-in-btn {
           border-radius: 100px;
           height: 56px;
@@ -103,7 +101,7 @@
         width: 100%;
       }
 
-      input {
+      input, select, mat-select {
         padding-bottom: 10px;
         margin-top: 10px;
         border-bottom: #C9C9C9;

@@ -9,10 +9,10 @@
     .content {
       position: relative;
       width: 60%;
-      margin-left: 10%;
+      margin-left: 13%;
 
       @media screen and(max-width: 1080px){
-        width: 80%;
+        margin: 0 auto;
 
         @media screen and(max-width: 1080px){
           width: 90%;

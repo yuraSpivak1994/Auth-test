@@ -17,15 +17,24 @@
             </mat-form-field>
           </div>
           <div class="col-md-6 extra-space4">
-            <mat-form-field class="form-element">
+
+            <mat-form-field>
               <input matInput
-                     placeholder="Middle Name (Optional)"
-                     formControlName="middleName">
+                     placeholder="Add Pseudonyms (Optional)"
+                     class="dropdown">
+              <img class="trigger" src="assets/images/login/add.png" (click)="toggleDropdown()">
+              <div *ngIf="visibleDropdown" class="dropdown-container">
+                <div *ngFor="let item of helperName" class="item-name">
+                  <span>{{item.name}}</span>
+                  <div class='delete-item' (click)="deleteItem(item.id)">
+                    <img src="/assets/images/login/remove.png" height="16" width="16"/></div>
+                </div>
+              </div>
             </mat-form-field>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-6  extra-space3">
             <mat-form-field>
               <input matInput
                      placeholder="First Name"
@@ -37,7 +46,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-6  extra-space3">
             <mat-form-field class="mat-datepicker">
               <input matInput [matDatepicker]="picker" placeholder="Choose a date" md-select-on-focus>
               <mat-datepicker-toggle matSuffix [for]="picker" class="toggle-btn-piker">
@@ -55,33 +64,30 @@
         <div class="row">
           <div class="col-md-6 extra-space3">
             <mat-form-field>
-              <input matInput
-                     placeholder="Password"
-                     autocomplete="off"
-                     maxlength="16"
-                     [type]="hide ? 'password' : 'text'"
-                     class="form-group"
-                     formControlName="password">
+              <mat-label>Select your car</mat-label>
+              <select matNativeControl id="mySelectId">
+                <option value="" disabled selected></option>
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+                <option value="mercedes">Mercedes</option>
+                <option value="audi">Audi</option>
+              </select>
             </mat-form-field>
           </div>
           <div class="col-md-6 extra-space4">
             <mat-form-field>
-              <input matInput
-                     placeholder="Repeat Password"
-                     class="form-group"
-                     formControlName="confirmPassword">
-              <mat-error *ngIf="form.hasError('notSame')">
-                Passwords do not match
-              </mat-error>
+              <mat-label>State</mat-label>
+              <mat-select>
+                <mat-option>None</mat-option>
+                <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
         </div>
         <div class="email box">
           <mat-form-field>
             <input matInput
-                   placeholder="Email Address"
-                   formControlName="email"
-            >
+                   placeholder="Email Address">
           </mat-form-field>
         </div>
         <div class="row">
@@ -100,8 +106,7 @@
             <mat-form-field>
               <input matInput
                      placeholder="Repeat Password"
-                     class="form-group"
-                     formControlName="confirmPassword">
+                     class="form-group">
               <mat-error *ngIf="form.hasError('notSame')">
                 Passwords do not match
               </mat-error>
@@ -110,7 +115,8 @@
         </div>
       </div>
       <div class="agree-box">
-        <mat-checkbox>I agree to SOCAN's <a>Terms & Conditions</a> of Membership.</mat-checkbox>
+        <mat-checkbox></mat-checkbox>
+        <span>I agree to SOCAN's <a>Terms & Conditions</a> of Membership.</span>
       </div>
       <div class="btn-container">
         <button [routerLink]="['/main']" class="back-to-apps-btn">Back to Application Type</button>

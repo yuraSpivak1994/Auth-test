@@ -6,11 +6,11 @@ import { MusicCreatorComponent } from './music-creator.component';
 import { UploadContractsComponent } from './upload-contracts/upload-contracts.component';
 import { SharedModule } from '../../shared/shared.module';
 import {
-  MatCheckboxModule,
+  MatCheckboxModule, MatChipsModule,
   MatDatepickerModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule, MatNativeDateModule
+  MatInputModule, MatNativeDateModule, MatSelectModule
 } from '@angular/material';
 
 @NgModule({
@@ -25,7 +25,9 @@ import {
     MatCheckboxModule,
     MatIconModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSelectModule,
+    MatChipsModule
   ]
 })
 export class MusicCreatorModule { }

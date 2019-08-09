@@ -8,6 +8,7 @@ import { User } from '../../../shared/interfaces/user';
 import { takeUntil } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ClearObservable } from '../../../shared/components/clearObservable';
+import * as $ from 'jquery';
 
 
 @Component({
@@ -30,11 +31,18 @@ export class PersonalInformationComponent extends ClearObservable implements OnI
   passwordRegex = /[ !"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]/;
   showSpinner = false;
   startDate = new Date();
+  states: string[] = [
+    'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California'
+  ];
+  helperName = [
+      {name: 'Yura Mormon', id: 1},
+      {name: 'Lera Mormon', id: 2},
+      {name: 'Dima Mormon', id: 3},
+  ];
+  visibleDropdown = false;
 
   constructor(private formBuilder: FormBuilder,
-              private authService: AuthService,
-              private userService: UserService,
-              private router: Router) {
+              private authService: AuthService) {
     super();
   }
 
@@ -50,29 +58,17 @@ export class PersonalInformationComponent extends ClearObservable implements OnI
         Validators.minLength(8),
         Validators.pattern(this.passwordRegex)]
       ],
-      confirmPassword: ['']
-      ,
-      email: new FormControl(null, [
-        Validators.required,
-        Validators.email,
-        Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')
-      ]),
       firstName: new FormControl(null, [Validators.required]),
       lastName: new FormControl(null, [Validators.required]),
       middleName: '',
-    }, {validator: this.checkPasswords});
+    });
   }
 
-  checkPasswords(group: FormGroup) {
-    const pass = group.controls.password.value;
-    const confirmPass = group.controls.confirmPassword.value;
-
-    return pass === confirmPass ? null : {notSame: true};
-  }
 
   validateFirstName() {
     return this.form.get('firstName').invalid && this.form.get('firstName').touched;
   }
+
 
   onSubmit() {
     if (this.form.valid) {
@@ -101,5 +97,20 @@ export class PersonalInformationComponent extends ClearObservable implements OnI
             console.log(err);
           });
     }
+  }
+
+  toggleDropdown() {
+    if (this.visibleDropdown ) {
+      this.visibleDropdown = false;
+    }else {
+      this.visibleDropdown = true;
+    }
+  }
+
+  deleteItem(id: number) {
+    this.helperName.forEach((item) => {
+      if (id === item.id) {
+      }
+    });
   }
 }
