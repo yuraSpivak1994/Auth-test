@@ -6,8 +6,19 @@
       z-index: 36;
       margin-top: 150px;
 
+      input {
+        padding-bottom: 0;
+        font-family: 'Montserrat', sans-serif;
+      }
+
+
       mat-form-field {
         font-weight: 600;
+        font-family: 'Montserrat', sans-serif;
+      }
+
+      .select {
+        padding-bottom: 0;
       }
       @media screen and(max-width: 580px){
         margin-top: 150px;
@@ -227,13 +238,16 @@
     ::ng-deep.mat-form-field-type-mat-native-select .mat-form-field-infix::after {
       color: #D02139;
     }
-    ::ng-deep.mat-chip-list-wrapper{
-      //position: absolute;
-      //top: 40px;
-    }
+
     ::ng-deep.mat-form-field-flex {
       padding-left: 10px;
     }
+
+    input:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 1000px white inset;
+      color: rgb(0, 0, 0) !important;
+    }
+
 
 
 

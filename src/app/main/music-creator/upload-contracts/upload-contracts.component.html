@@ -1,3 +1,58 @@
+<div class="box" [@simpleFadeAnimation]="'in'">
+  <div class="description-container">
+    <h3>Music Creator Application</h3>
+    <h1>Upload Signed Contracts</h1>
+    <p>Please provide your contracts for verification. Download your contracts and upload them signed to continue.</p>
+  </div>
+  <form  (ngSubmit)="onSubmit()">
+    <div class="line-block">
+      <div class="preview-info">
+        <div class="download-socan">
+          <img src="/assets/images/login/convert-icon.svg" alt="letter">
+          <a>Download SOCAN Contract</a>
+        </div>
+        <span class="no-file">No File Added</span>
+        <div class="upload-file">
+          <span>Upload a file</span>
+          <img src="/assets/images/login/add.png" alt="add">
+        </div>
+      </div>
+      <div class="toggle-container">
+        <div class=" box-drop">
+          <div class="info-drop">
+            <img src="/assets/images/login/upload.svg" alt="drop" >
+            <span>Drop files here or <a>browse</a> </span>
+          </div>
+  <span class="hiddenFileInput">
+    <input type="file"
+           name="image"
+           aria-hidden="true"
+           [(ngModel)]="pathInput"
+           [ngModelOptions]="{standalone: true}"
+           placeholder="Drop files here or browse "
+           (change)="fileProgress($event)"/>
+  </span>
+        </div>
+        <div class="progress-container">
+          <img src="/assets/images/login/done-icon.svg" alt="done" class="done-icon">
+          <span>{{pathInput}}</span>
+          <div class="progress">
+            <div [ngStyle]="{'width': fileUploadProgress}" class="line-done"></div>
+          </div>
+          <img src="/assets/images/login/delete-icon.svg" alt="delete" class="delete-icon" (click)="removeContract()">
+        </div>
+      </div>
+    </div>
+    <div class="btn-container">
+      <button class="back-to-apps-btn"
+              type="button"
+              [routerLink]="['/main/creator/personal']">Previous</button>
+      <button class="continue-btn"
+              type="submit"
+              [ngClass]="{'btn-disabled' : !pathInput}"
+              [disabled]="!pathInput">Send</button>
+    </div>
+  </form>
+</div>
 
-<div class="test" [@simpleFadeAnimation]="'in'"></div>
-<button [routerLink]="['/main/creator/personal']" >get back</button>
+

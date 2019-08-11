@@ -1,5 +1,171 @@
-.test {
-  width: 200px;
-  height: 200px;
-  background: red;
+.box {
+  position: relative;
+  z-index: 23;
+
+}
+.box-drop {
+  border: 2px solid #D02139;
+  border-style: dashed;
+  position: relative;
+
+  .info-drop {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    img {
+      padding-right: 10px;
+    }
+    a {
+      font-weight: 600;
+      color: #D02139;
+    }
+  }
+}
+.line-block {
+  border-bottom: 1px solid rgba(154, 154, 154, 0.58);
+  padding: 0 20px;
+
+  @media screen and(max-width: 580px) {
+    padding: 0;
+  }
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 50px;
+  padding-bottom: 20px;
+
+  .back-to-apps-btn {
+    height: 56px;
+    width: 172px;
+    border: 2px solid #393939;
+    border-radius: 100px;
+    background: rgba(0, 41, 255, 0);
+    color: #393939;
+    font-family: Rubik, sans-serif;
+    font-weight: 600;
+    @media screen and(max-width: 580px) {
+      width: 100%;
+    }
+  }
+
+  .continue-btn {
+    height: 56px;
+    width: 200px;
+    border-radius: 100px;
+    background: #E4E4E4;
+    color: #767676;
+    font-family: Rubik, sans-serif;
+    font-weight: 600;
+    @media screen and(max-width: 580px) {
+      width: 100%;
+    }
+  }
+
+  @media screen and(max-width: 580px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.toggle-container {
+  width: 100%;
+  padding: 0 20px;
+}
+
+.hiddenFileInput > input{
+  height: 100px;
+  width: 100%;
+  opacity: 0;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #EEEEEE;
+}
+.preview-info {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+
+  @media screen and(max-width: 770px) {
+    flex-direction: column;
+  }
+
+  img {
+    cursor: pointer;
+  }
+
+  .download-socan {
+
+    a {
+      padding-left: 10px;
+    }
+
+  }
+
+  .upload-file {
+    span {
+      padding-right: 10px;
+    }
+  }
+
+  span.no-file {
+    text-align: center;
+    padding-right: 30px;
+    font-size: 14px;
+    opacity: 0.3;
+  }
+}
+
+.hiddenFileInput {
+  box-sizing: border-box;
+  height: 82px;
+  width: 703px;
+  overflow: hidden;
+  position: relative;
+
+}
+.progress-container {
+  width: 100%;
+  position: relative;
+  padding: 0 25px;
+
+  span {
+    position: absolute;
+    top: -20px;
+  }
+
+  .done-icon {
+    position: absolute;
+    top: -20px;
+    left: 0;
+  }
+
+  .delete-icon {
+    position: absolute;
+    top: -20px;
+    right: 0;
+    cursor: pointer;
+  }
+}
+.progress{
+  border-radius: 100px;
+  height: 2px;
+  margin: 40px 0 10px 0;
+
+
+  .line-done {
+    display: inline-block;
+    height: 2px;
+    background-color: #3454F6;
+  }
+}
+
+.description-container {
+  max-width: 560px;
 }

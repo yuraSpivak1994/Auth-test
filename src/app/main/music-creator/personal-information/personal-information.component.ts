@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { slideInAnimation } from '../../../shared/animation';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../auth/auth.service';
@@ -9,6 +9,7 @@ import { takeUntil } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ClearObservable } from '../../../shared/components/clearObservable';
 import * as $ from 'jquery';
+import { UserInfoService } from '../../user-info.ser vice';
 
 
 @Component({
@@ -23,44 +24,59 @@ import * as $ from 'jquery';
 })
 export class PersonalInformationComponent extends ClearObservable implements OnInit {
 
+  @Output() onChanged = new EventEmitter<boolean>();
   form: FormGroup;
   hide = true;
   errorToggle = false;
   toggleSuccess = false;
   togglePage = true;
-  passwordRegex = /[ !"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]/;
   showSpinner = false;
   startDate = new Date();
   states: string[] = [
-    'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California'
+    'About Winnipeg', 'Manitoba', 'Hamilton', 'Ontario', 'Quebec', 'Edmonton'
   ];
   helperName = [
-      {name: 'Yura Mormon', id: 1},
-      {name: 'Lera Mormon', id: 2},
-      {name: 'Dima Mormon', id: 3},
+      {name: 'Yura Mormon'},
+      {name: 'Lera Mormon'},
+      {name: 'Dima Mormon'},
+      {name: 'Vasya Mormon'},
+      {name: 'Petro Mormon'},
   ];
+  numberPattern = new RegExp('^[0-9]+$');
   visibleDropdown = false;
 
   constructor(private formBuilder: FormBuilder,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private userInfoService: UserInfoService) {
     super();
   }
 
   ngOnInit() {
     this.initForm();
+    // this.getCanadaStates();
+  }
+
+  change(increased:any) {
+    this.onChanged.emit(increased);
+  }
+
+  getCanadaStates() {
+    this.userInfoService.getCanadaStates().subscribe((data) => {
+      console.log(data);
+    });
   }
 
   initForm() {
     this.form = this.formBuilder.group({
-      password: ['', [
-        Validators.required,
-        Validators.maxLength(16),
-        Validators.minLength(8),
-        Validators.pattern(this.passwordRegex)]
-      ],
-      firstName: new FormControl(null, [Validators.required]),
-      lastName: new FormControl(null, [Validators.required]),
-      middleName: '',
+      preferredName: new FormControl(null, [Validators.required]),
+      phone: new FormControl(null, [Validators.required, Validators.pattern(this.numberPattern)]),
+      date: new FormControl(null, [Validators.required]),
+      country: new FormControl(null, [Validators.required]),
+      state: new FormControl(null, [Validators.required]),
+      address: new FormControl(null, [Validators.required]),
+      city: new FormControl(null, [Validators.required]),
+      postal: new FormControl(null, [Validators.required]),
+      checkbox: new FormControl(null, [Validators.required, Validators.requiredTrue]),
     });
   }
 
@@ -100,17 +116,13 @@ export class PersonalInformationComponent extends ClearObservable implements OnI
   }
 
   toggleDropdown() {
-    if (this.visibleDropdown ) {
-      this.visibleDropdown = false;
-    }else {
-      this.visibleDropdown = true;
-    }
+    this.visibleDropdown = !this.visibleDropdown;
   }
 
-  deleteItem(id: number) {
-    this.helperName.forEach((item) => {
-      if (id === item.id) {
-      }
+  deleteItem() {
+    const index = this.helperName.findIndex((item) => {
+      return item.name;
     });
-  }
+    this.helperName.splice(index, 1);
+    }
 }
