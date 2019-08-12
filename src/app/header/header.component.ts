@@ -1,4 +1,7 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { UserService } from '../shared/services/user.service';
+import { Router } from '@angular/router';
+import { StepperHelperService } from '../shared/services/stepper-helper.service';
 
 @Component({
   selector: 'app-header',
@@ -6,12 +9,19 @@ import { Component, HostListener, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  private hide = false;
+  isLogged: boolean;
 
-  constructor() {
+  constructor(private userService: UserService,
+              private router: Router,
+              private stepperService: StepperHelperService) {
   }
 
   ngOnInit() {
+    console.log(this.isLogged = this.userService.getToken());
+    this.showButtonLogout();
   }
+
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll(e) {
@@ -27,4 +37,33 @@ export class HeaderComponent implements OnInit {
       btn.classList.remove('red-lang');
     }
   }
+
+
+  toggleButton() {
+    this.hide = !this.hide;
+  }
+
+
+  showButtonLogout() {
+    this.stepperService.checkBtnLogout
+      .subscribe((res: boolean) => {
+        if (res) {
+          this.isLogged = res;
+        }
+      });
+  }
+
+  hideLogoutBtn() {
+    this.stepperService.checkBtnLogout.next(false);
+  }
+
+  logout() {
+    localStorage.clear();
+    this.hide = false;
+    this.isLogged = false;
+    this.hideLogoutBtn();
+    this.stepperService.checkBtnLogout.next(false);
+    this.router.navigate(['']);
+  }
 }
+

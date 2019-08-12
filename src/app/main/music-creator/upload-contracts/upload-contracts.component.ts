@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { slideInAnimation } from '../../../shared/animation';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { StepperHelperService } from '../../../shared/services/stepper-helper.service';
 
 @Component({
   selector: 'app-upload-contracts',
@@ -16,11 +17,17 @@ export class UploadContractsComponent implements OnInit {
   fileUploadProgress: string = null;
   form: FormGroup;
   pathInput: string;
+  stepper = {
+    first: '#00B274',
+    second: '#00B274'
+  };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private stepperHelperService: StepperHelperService) { }
 
   ngOnInit() {
     this.initForm();
+    this.initSecondStep();
   }
 
   fileProgress(fileInput: any) {
@@ -71,5 +78,10 @@ export class UploadContractsComponent implements OnInit {
     this.fileData = null;
     this.pathInput = '';
     this.fileUploadProgress = '0';
+  }
+
+
+  initSecondStep() {
+      this.stepperHelperService.stepperSubject.next(this.stepper);
   }
 }

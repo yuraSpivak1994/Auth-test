@@ -2,6 +2,10 @@
   position: relative;
   z-index: 23;
 
+  @media screen and(max-width: 580px) {
+    margin-top: 50px;
+  }
+
 }
 .box-drop {
   border: 2px solid #D02139;
@@ -49,6 +53,11 @@
     font-weight: 600;
     @media screen and(max-width: 580px) {
       width: 100%;
+    }
+
+    &:hover {
+      background-color: #393939;
+      color: #FFFFFF;
     }
   }
 
@@ -168,4 +177,8 @@
 
 .description-container {
   max-width: 560px;
+}
+
+.btn-disabled {
+  background-color: #9a9a9a!important;
 }

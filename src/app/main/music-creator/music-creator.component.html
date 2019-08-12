@@ -3,7 +3,26 @@
     <div class="big-oval"></div>
     <div class="small-oval"></div>
     <div class="bottom-oval"></div>
+
     <div class="content">
+      <div class="stepper">
+        <div class="step">
+          <span class="step-desc"  [ngStyle]="{'color': stepper.first || checkColor(stepper.first)}">1. Personal Information</span>
+          <div  class="line" [ngStyle]="{'background-color': stepper.first || checkColor(stepper.first)}"></div>
+        </div>
+        <div class="step">
+          <span class="step-desc"  [ngStyle]="{'color': stepper.second  || checkColor(stepper.second)}">2. Upload Signed Contracts</span>
+          <div class="line" [ngStyle]="{'background-color': stepper.second ||  checkColor(stepper.second)}"></div>
+        </div>
+        <div class="step">
+          <span class="step-desc">3. Application Verification</span>
+          <div class="line"></div>
+        </div>
+        <div class="step">
+          <span class="step-desc">4. Complete Application</span>
+          <div class="line"></div>
+        </div>
+      </div>
       <router-outlet></router-outlet>
     </div>
   </div>
