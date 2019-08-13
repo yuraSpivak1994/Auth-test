@@ -3,16 +3,16 @@
     <div class="big-oval"></div>
     <div class="small-oval"></div>
     <div class="bottom-oval"></div>
-
+      <button class="save-btn" id="btn2" (click)="save()">Save</button>
     <div class="content">
       <div class="stepper">
         <div class="step">
-          <span class="step-desc"  [ngStyle]="{'color': stepper.first || checkColor(stepper.first)}">1. Personal Information</span>
-          <div  class="line" [ngStyle]="{'background-color': stepper.first || checkColor(stepper.first)}"></div>
+          <span class="step-desc"  [ngStyle]="{'color': stepper.first}">1. Personal Information</span>
+          <div  class="line" [ngStyle]="{'background-color': stepper.first}"></div>
         </div>
         <div class="step">
-          <span class="step-desc"  [ngStyle]="{'color': stepper.second  || checkColor(stepper.second)}">2. Upload Signed Contracts</span>
-          <div class="line" [ngStyle]="{'background-color': stepper.second ||  checkColor(stepper.second)}"></div>
+          <span class="step-desc"  [ngStyle]="{'color': stepper.second}">2. Upload Signed Contracts</span>
+          <div class="line" [ngStyle]="{'background-color': stepper.second}"></div>
         </div>
         <div class="step">
           <span class="step-desc">3. Application Verification</span>
@@ -23,7 +23,215 @@
           <div class="line"></div>
         </div>
       </div>
-      <router-outlet></router-outlet>
+<!--      <router-outlet></router-outlet>-->
+<!--      PERSONAL INFO =================================================================-->
+      <div *ngIf="togglePagePersonal" class="form-container" [@simpleFadeAnimation]="'in'">
+        <form enctype="multipart/form-data" [formGroup]="form" (ngSubmit)="onSubmit()" class="form" >
+          <h3>Music Creator Application</h3>
+          <h1>Personal Information</h1>
+          <span class="login-desc">Please provide some additional profile information to start your application:</span>
+          <span class="contact-info-desc"> Personal Information</span>
+          <div class="container-padding">
+            <div class="row">
+              <div class="col-md-6 extra-space3">
+                <mat-form-field>
+                  <input matInput
+                         placeholder="Preferred Name"
+                         [(ngModel)]="user.name"
+                         formControlName="preferredName">
+                </mat-form-field>
+              </div>
+              <div class="col-md-6 extra-space4">
+
+                <mat-form-field>
+                  <input matInput
+                         placeholder="Add Pseudonyms (Optional)"
+                         class="dropdown">
+                  <img class="trigger" src="assets/images/login/add.png" (click)="toggleDropdown()">
+                  <div *ngIf="visibleDropdown" class="dropdown-container">
+                    <div *ngFor="let item of helperName" class="item-name">
+                      <span>{{item.name}}</span>
+                      <div class='delete-item' (click)="deleteItem()">
+                        <img src="/assets/images/login/remove.png" height="16" width="16"/></div>
+                    </div>
+                  </div>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6  extra-space3">
+                <mat-form-field>
+                  <input matInput
+                         placeholder="Phone Number"
+                         formControlName="phone">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row gender-box">
+              <div class="col-md-6 extra-space3">
+                <mat-form-field>
+                  <mat-label>Select Gender</mat-label>
+                  <select matNativeControl
+                          formControlName="selectGender"
+                          (click)="checkGenderValue(form.get('selectGender').value)"
+                          id="select-gender">
+                    <option value="" disabled selected></option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </mat-form-field>
+              </div>
+              <div *ngIf="genderValue" class="col-md-6 extra-space4">
+                <mat-form-field>
+                  <input matInput
+                         placeholder="Gender"
+                         formControlName="otherGender">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6  extra-space3">
+                <mat-form-field class="mat-datepicker">
+                  <input matInput
+                         [matDatepicker]="picker"
+                         placeholder="Date of Birth"
+                         md-select-on-focus
+                         formControlName="date">
+                  <mat-datepicker-toggle matSuffix [for]="picker" class="toggle-btn-piker">
+                    <mat-icon matDatepickerToggleIcon>
+                      <div class="calendar-icon"  style="background-image: url('assets/images/login/calendar-icon.png')"></div>
+                    </mat-icon>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <span class="contact-info-desc">Contact Information</span>
+          <div class="container-padding">
+            <div class="row">
+              <div class="col-md-6 extra-space3">
+                <mat-form-field>
+                  <mat-label>Country</mat-label>
+                  <select matNativeControl
+                          formControlName="country"
+                          id="mySelectId">
+                    <option value="" disabled selected></option>
+                    <option value="volvo">Canada</option>
+                  </select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6 extra-space4">
+                <mat-form-field>
+                  <mat-label>Province/ State</mat-label>
+                  <mat-select formControlName="state">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="email box">
+              <mat-form-field>
+                <input matInput
+                       formControlName="address"
+                       placeholder="Address">
+              </mat-form-field>
+            </div>
+            <div class="row">
+              <div class="col-md-6 extra-space3">
+                <mat-form-field>
+                  <input matInput
+                         placeholder="City"
+                         class="form-group"
+                         formControlName="city">
+                </mat-form-field>
+              </div>
+              <div class="col-md-6 extra-space4">
+                <mat-form-field>
+                  <input matInput
+                         placeholder="Postal/ Zip Code"
+                         formControlName="postal"
+                         class="form-group">
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="agree-box">
+            <mat-checkbox formControlName="checkbox"></mat-checkbox>
+            <span>I agree to SOCAN's <a>Terms & Conditions</a> of Membership.</span>
+          </div>
+          <div class="btn-container">
+            <button [routerLink]="['/main']" class="back-to-apps-btn">Back to Application Type</button>
+            <button [routerLink]="['/main/creator/uploader']"
+                    class="continue-btn"
+                    type="submit"
+                    [ngClass]="{'btn-disabled' : form.invalid}">Continue</button>
+          </div>
+        </form>
+
+      </div>
+<!--      ================================================================================================-->
+<!--UPLOADER==============================================================================================-->
+      <div *ngIf="toggleUploader" class="box" [@simpleFadeAnimation]="'in'">
+        <div class="description-container">
+          <h3>Music Creator Application</h3>
+          <h1>Upload Signed Contracts</h1>
+          <p>Please provide your contracts for verification. Download your contracts and upload them signed to continue.</p>
+        </div>
+        <form  (ngSubmit)="onSubmit()">
+          <div class="line-block">
+            <div class="preview-info">
+              <div class="download-socan">
+                <img src="/assets/images/login/convert-icon.svg" alt="letter">
+                <a>Download SOCAN Contract</a>
+              </div>
+              <span class="no-file">No File Added</span>
+              <div class="upload-file">
+                <span>Upload a file</span>
+                <img src="/assets/images/login/add.png" alt="add">
+              </div>
+            </div>
+            <div class="toggle-container">
+              <div class=" box-drop">
+                <div class="info-drop">
+                  <img src="/assets/images/login/upload.svg" alt="drop" >
+                  <span>Drop files here or <a>browse</a> </span>
+                </div>
+                <span class="hiddenFileInput">
+    <input type="file"
+           name="image"
+           aria-hidden="true"
+           [(ngModel)]="pathInput"
+           [ngModelOptions]="{standalone: true}"
+           placeholder="Drop files here or browse "
+           (change)="fileProgress($event)"/>
+  </span>
+              </div>
+              <div class="progress-container">
+                <img src="/assets/images/login/done-icon.svg" alt="done" class="done-icon">
+                <span>{{pathInput}}</span>
+                <div class="progress">
+                  <div [ngStyle]="{'width': fileUploadProgress}" class="line-done"></div>
+                </div>
+                <img src="/assets/images/login/delete-icon.svg" alt="delete" class="delete-icon" (click)="removeContract()">
+              </div>
+            </div>
+          </div>
+          <div class="btn-container">
+            <button class="back-to-apps-btn"
+                    type="button"
+                    (click)="save()">Previous</button>
+            <button class="continue-btn"
+                    type="submit"
+                    [ngClass]="{'btn-disabled' : !pathInput}"
+                    [disabled]="!pathInput">Send</button>
+          </div>
+        </form>
+      </div>
+<!--=============================================================================================================      -->
+
     </div>
   </div>
   <div class="right-part" style="background-image: url('assets/images/login/girl-singing-purple.png')">

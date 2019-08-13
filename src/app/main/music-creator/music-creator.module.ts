@@ -12,6 +12,7 @@ import {
   MatIconModule,
   MatInputModule, MatNativeDateModule, MatSelectModule
 } from '@angular/material';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [MusicCreatorComponent, PersonalInformationComponent, UploadContractsComponent],
@@ -27,7 +28,8 @@ import {
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    MatChipsModule
+    MatChipsModule,
+    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'})
   ]
 })
 export class MusicCreatorModule { }

@@ -1,8 +1,13 @@
-import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { slideInAnimation } from '../../shared/animation';
 import { StepperHelperService } from '../../shared/services/stepper-helper.service';
 import { UserService } from '../../shared/services/user.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { HttpClient, HttpEventType } from '@angular/common/http';
+import { MainService } from '../main.service';
+import { Aplication } from '../../shared/interfaces/user';
+import { User } from '../../shared/models';
 
 @Component({
   selector: 'app-music-creator',
@@ -11,35 +16,174 @@ import { Router } from '@angular/router';
   animations: [ slideInAnimation ]
 })
 export class MusicCreatorComponent implements OnInit {
+  firstStep = 1;
+  secondStep = 0;
   stepper = {
-    first: '',
+    first: '#00B274',
     second: ''
   };
+  form: FormGroup;
+  startDate = new Date();
+  states: string[] = [
+    'About Winnipeg', 'Manitoba', 'Hamilton', 'Ontario', 'Quebec', 'Edmonton'
+  ];
+  helperName = [
+    {name: 'Yura Mormon'},
+    {name: 'Lera Mormon'},
+    {name: 'Dima Mormon'},
+    {name: 'Vasya Mormon'},
+    {name: 'Petro Mormon'},
+  ];
+  // tslint:disable-next-line:ban-types
+  public user: Object = {
+    firstName: '',
+    lastName: ''
+  };
+
+
+  numberPattern = new RegExp('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$');
+  visibleDropdown = false;
+  fileData: File = null;
+  previewUrl: any = null;
+  fileUploadProgress: string = null;
+  pathInput: string;
+  togglePagePersonal = true;
+  toggleUploader = false;
+  genderValue =  false;
 
   constructor(private stepperHelperService: StepperHelperService,
               private userService: UserService,
-              private router: Router) { }
+              private router: Router,
+              private formBuilder: FormBuilder,
+              private http: HttpClient,
+              private mainService: MainService,
+              private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.getFirstStep();
+    this.initForm();
+    this.getUserData();
+    this.activatedRoute.data.subscribe((data: {user: User}) => {
+      console.log(this.user = data);
+    });
   }
 
-  checkColor(color) {
-    if (color === undefined || color === '') {
-      return 'inherit';
+  checkGenderValue(value) {
+    if(value === 'other') {
+      this.genderValue = true;
     } else {
-      return 'initial';
+      this.genderValue = false;
     }
   }
-  getFirstStep() {
-    this.stepperHelperService.stepperSubject
-      .subscribe((res: object) => {
-        if (res) {
-          // @ts-ignore
-          this.stepper.first = res.first;
-          // @ts-ignore
-          this.stepper.second = res.second;
+
+  initForm() {
+    this.form = this.formBuilder.group({
+      preferredName: new FormControl(null, [Validators.required]),
+      selectGender: new FormControl(null, [Validators.required]),
+      otherGender: new FormControl(null, [Validators.required]),
+      phone: new FormControl(null, [Validators.required, Validators.pattern(this.numberPattern)]),
+      date: new FormControl(null, [Validators.required]),
+      country: new FormControl(null, [Validators.required]),
+      state: new FormControl(null, [Validators.required]),
+      address: new FormControl(null, [Validators.required]),
+      city: new FormControl(null, [Validators.required]),
+      postal: new FormControl(null, [Validators.required]),
+      checkbox: new FormControl(null, [Validators.required, Validators.requiredTrue]),
+    });
+  }
+
+  checkStep() {
+    if (this.toggleUploader) {
+        this.stepper.second = '#00B274';
+    } else  {
+      this.stepper.second = '#4D4D4D';
+    }
+  }
+  toggleDropdown() {
+    this.visibleDropdown = !this.visibleDropdown;
+  }
+
+  deleteItem() {
+    const index = this.helperName.findIndex((item) => {
+      return item.name;
+    });
+    this.helperName.splice(index, 1);
+  }
+
+  fileProgress(fileInput: any) {
+    this.fileData = fileInput.target.files[0] as File;
+    this.preview();
+  }
+
+  preview() {
+    const mimeType = this.fileData.type;
+    if (mimeType.match(/image\/*/) == null) {
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(this.fileData);
+    reader.onload = (event) => {
+      this.previewUrl = reader.result;
+    };
+  }
+
+
+  onSubmit() {
+    const formData = new FormData();
+    formData.append('files', this.fileData);
+    this.fileUploadProgress = '0%';
+
+    this.http.post('https://us-central1-tutorial-e6ea7.cloudfunctions.net/fileUpload', formData, {
+      reportProgress: true,
+      observe: 'events'
+    })
+      .subscribe(events => {
+        if (events.type === HttpEventType.UploadProgress) {
+          this.fileUploadProgress = Math.round(events.loaded / events.total * 100) + '%';
+          console.log(this.fileUploadProgress);
+        } else if (events.type === HttpEventType.Response) {
+          console.log(events.body);
         }
       });
   }
+
+  removeContract() {
+    this.fileData = null;
+    this.pathInput = '';
+    this.fileUploadProgress = '0';
+  }
+
+  save() {
+    if (this.togglePagePersonal) {
+      this.togglePagePersonal = false;
+      this.toggleUploader = true;
+      this.firstStep = 1;
+      this.secondStep = 2;
+      this.checkStep();
+  } else {
+      this.togglePagePersonal = true;
+      this.toggleUploader = false;
+      this.secondStep = 0;
+      this.checkStep();
+    }
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll(e) {
+    if (window.pageYOffset > 80) {
+      const btn = document.getElementById('btn2');
+      btn.classList.add('red-lang');
+    } else {
+      const btn = document.getElementById('btn2');
+      btn.classList.remove('red-lang');
+    }
+  }
+
+  getUserData() {
+    this.mainService.getUser()
+      .subscribe((res) => {
+       this.user = res;
+      });
+  }
+
 }
