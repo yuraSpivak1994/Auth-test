@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../shared/interfaces/user';
 import { AuthService } from '../auth.service';
@@ -27,6 +27,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 })
 export class LoginComponent extends ClearObservable implements OnInit {
 
+  @Output() fromLogin = new EventEmitter();
+  showBtnLogout = true;
   form: FormGroup;
   hide = true;
   showSpinner = false;

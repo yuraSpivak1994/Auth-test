@@ -162,33 +162,4 @@ export class RegistrationComponent extends ClearObservable implements OnInit {
           });
     }
   }
-
-  showError() {
-    if (this.form.valid) {
-      this.showSpinner = true;
-      const req: User = {};
-
-      req.firstName = this.form.controls.firstName.value;
-      req.middleName = this.form.controls.middleName.value;
-      req.lastName = this.form.controls.lastName.value;
-      req.username = this.form.controls.email.value;
-      req.password = this.form.controls.password.value;
-      req.hearAbout = 4;
-      req.passwordRepeat = this.form.controls.confirmPassword.value;
-
-      this.authService.register(req)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((res) => {
-            this.showSpinner = false;
-            this.toggleSuccess = true;
-            this.togglePage = false;
-          },
-          (err: HttpErrorResponse) => {
-            this.errorToggle = true;
-            this.togglePage = false;
-            this.showSpinner = false;
-            console.log(err);
-          });
-    }
-  }
 }
