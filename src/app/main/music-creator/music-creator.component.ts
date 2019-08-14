@@ -6,7 +6,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { MainService } from '../main.service';
-import { Aplication } from '../../shared/interfaces/user';
 import { User } from '../../shared/models';
 
 @Component({
@@ -35,11 +34,19 @@ export class MusicCreatorComponent implements OnInit {
     {name: 'Petro Mormon'},
   ];
   // tslint:disable-next-line:ban-types
-  public user: Object = {
-    firstName: '',
-    lastName: ''
+  public userInfo = {
+    user: {
+      applicant: {
+        address: [{city: '', country: '', postalCode: '', provinceState: '', addressLine1: ''}],
+        applicationStep: '',
+        applicationType: '',
+        creatorData: {DOB: '', gender: '', genderValue: ''},
+        name: [{name: ''}, {name: ''}],
+        phone: [{phoneNumber: ''}],
+        submitter: ''
+      }
+    }
   };
-
 
   numberPattern = new RegExp('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$');
   visibleDropdown = false;
@@ -50,6 +57,9 @@ export class MusicCreatorComponent implements OnInit {
   togglePagePersonal = true;
   toggleUploader = false;
   genderValue =  false;
+  showSpinner = false;
+  alertMessageSuccess = false;
+  alertMessageError = false;
 
   constructor(private stepperHelperService: StepperHelperService,
               private userService: UserService,
@@ -61,14 +71,17 @@ export class MusicCreatorComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-    this.getUserData();
-    this.activatedRoute.data.subscribe((data: {user: User}) => {
-      console.log(this.user = data);
+    this.activatedRoute.data.subscribe((data: any) => {
+      this.userInfo = data;
+      this.showSpinner = false;
+    }, error => {
+      this.showSpinner = false;
     });
+
   }
 
   checkGenderValue(value) {
-    if(value === 'other') {
+    if (value === 'O') {
       this.genderValue = true;
     } else {
       this.genderValue = false;
@@ -78,6 +91,7 @@ export class MusicCreatorComponent implements OnInit {
   initForm() {
     this.form = this.formBuilder.group({
       preferredName: new FormControl(null, [Validators.required]),
+      pseudonym: new FormControl(null, [Validators.required]),
       selectGender: new FormControl(null, [Validators.required]),
       otherGender: new FormControl(null, [Validators.required]),
       phone: new FormControl(null, [Validators.required, Validators.pattern(this.numberPattern)]),
@@ -128,7 +142,7 @@ export class MusicCreatorComponent implements OnInit {
   }
 
 
-  onSubmit() {
+  onSubmitUploader() {
     const formData = new FormData();
     formData.append('files', this.fileData);
     this.fileUploadProgress = '0%';
@@ -154,18 +168,19 @@ export class MusicCreatorComponent implements OnInit {
   }
 
   save() {
-    if (this.togglePagePersonal) {
-      this.togglePagePersonal = false;
-      this.toggleUploader = true;
-      this.firstStep = 1;
-      this.secondStep = 2;
-      this.checkStep();
-  } else {
-      this.togglePagePersonal = true;
-      this.toggleUploader = false;
-      this.secondStep = 0;
-      this.checkStep();
-    }
+    this.onSubmitApplication();
+  //   if (this.togglePagePersonal) {
+  //     this.togglePagePersonal = false;
+  //     this.toggleUploader = true;
+  //     this.firstStep = 1;
+  //     this.secondStep = 2;
+  //     this.checkStep();
+  // } else {
+  //     this.togglePagePersonal = true;
+  //     this.toggleUploader = false;
+  //     this.secondStep = 0;
+  //     this.checkStep();
+  //   }
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -182,8 +197,64 @@ export class MusicCreatorComponent implements OnInit {
   getUserData() {
     this.mainService.getUser()
       .subscribe((res) => {
-       this.user = res;
+        console.log(res);
       });
   }
 
+
+  onSubmitApplication() {
+    this.showSpinner = true;
+    const application: any = {};
+    application.applicationType = 'Creator';
+    application.applicationStep = '1';
+    application.name = [{
+      isPreferredName: true,
+      nameType: 'preferred',
+      name: this.form.controls.preferredName.value
+    }, {
+      nameType: 'pseudonym',
+      name: this.form.controls.pseudonym.value
+    }
+    ];
+    application.phone =  [{phoneNumber: this.form.controls.phone.value}];
+    application.creatorData = {
+      gender: this.form.controls.selectGender.value,
+      DOB: this.form.controls.date.value,
+      genderValue: this.form.controls.otherGender.value
+    };
+    application.address = [
+      {
+        country: this.form.controls.country.value,
+        provinceState: this.form.controls.state.value,
+        addressLine1: this.form.controls.address.value,
+        city: this.form.controls.city.value,
+        postalCode: this.form.controls.postal.value
+      }
+    ];
+    console.log(application);
+    this.mainService.createApp({application : application})
+      .subscribe((res) => {
+        this.showSpinner = false;
+        this.showSuccessAlert();
+      },
+        error => {
+          this.showSpinner = false;
+          this.showErrorAlert();
+          console.log(error);
+        });
+  }
+
+  showSuccessAlert() {
+    this.alertMessageSuccess = true;
+    setTimeout(() => {
+      this.alertMessageSuccess = false;
+    }, 3000);
+  }
+
+  showErrorAlert() {
+    this.alertMessageError = true;
+    setTimeout(() => {
+      this.alertMessageError = false;
+    }, 3000);
+  }
 }

@@ -10,7 +10,7 @@ import {
   MatDatepickerModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule, MatNativeDateModule, MatSelectModule
+  MatInputModule, MatNativeDateModule, MatProgressSpinnerModule, MatSelectModule
 } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -29,7 +29,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatNativeDateModule,
     MatSelectModule,
     MatChipsModule,
-    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'})
+    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
+    MatProgressSpinnerModule
   ]
 })
 export class MusicCreatorModule { }

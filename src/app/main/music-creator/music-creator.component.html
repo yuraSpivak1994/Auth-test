@@ -1,5 +1,16 @@
 <div class="container-general" [@simpleFadeAnimation]="'in'">
+  <div *ngIf="showSpinner" class="spinner-box">
+    <mat-spinner *ngIf="showSpinner"></mat-spinner>
+  </div>
   <div class="left-part">
+    <div class="alert alert-success" role="alert" [ngClass]="{'toggle-alert': alertMessageSuccess}">
+      This is a success alert—check it out!
+    </div>
+    <div class="alert alert-danger" role="alert" [ngClass]="{'toggle-alert': alertMessageError}">
+      This is a danger alert—check it out!
+    </div>
+
+
     <div class="big-oval"></div>
     <div class="small-oval"></div>
     <div class="bottom-oval"></div>
@@ -25,8 +36,8 @@
       </div>
 <!--      <router-outlet></router-outlet>-->
 <!--      PERSONAL INFO =================================================================-->
-      <div *ngIf="togglePagePersonal" class="form-container" [@simpleFadeAnimation]="'in'">
-        <form enctype="multipart/form-data" [formGroup]="form" (ngSubmit)="onSubmit()" class="form" >
+      <div *ngIf="togglePagePersonal" class="form-container" [@simpleFadeAnimation]="'in'" >
+        <form [formGroup]="form" (ngSubmit)="onSubmitApplication()" class="form" >
           <h3>Music Creator Application</h3>
           <h1>Personal Information</h1>
           <span class="login-desc">Please provide some additional profile information to start your application:</span>
@@ -35,19 +46,28 @@
             <div class="row">
               <div class="col-md-6 extra-space3">
                 <mat-form-field>
-                  <input matInput
-                         placeholder="Preferred Name"
-                         [(ngModel)]="user.name"
-                         formControlName="preferredName">
+                  <span *ngFor="let item of userInfo.user.applicant.name; let i = index ">
+                     <input
+                       *ngIf="i%2 == 0"
+                       matInput
+                       placeholder="Preferred Name"
+                       [(ngModel)]="item.name"
+                       formControlName="preferredName">
+                  </span>
                 </mat-form-field>
               </div>
               <div class="col-md-6 extra-space4">
-
                 <mat-form-field>
-                  <input matInput
-                         placeholder="Add Pseudonyms (Optional)"
-                         class="dropdown">
+                  <span *ngFor="let item of userInfo.user.applicant.name; let i = index ">
+                    <input *ngIf="i%2 != 0"
+                           matInput
+                           placeholder="Add Pseudonyms (Optional)"
+                           formControlName="pseudonym"
+                           [(ngModel)]="item.name"
+                           class="dropdown">
                   <img class="trigger" src="assets/images/login/add.png" (click)="toggleDropdown()">
+                  </span>
+
                   <div *ngIf="visibleDropdown" class="dropdown-container">
                     <div *ngFor="let item of helperName" class="item-name">
                       <span>{{item.name}}</span>
@@ -61,7 +81,9 @@
             <div class="row">
               <div class="col-md-6  extra-space3">
                 <mat-form-field>
-                  <input matInput
+                  <input *ngFor="let item of userInfo.user.applicant.phone"
+                         matInput
+                         [(ngModel)]="item.phoneNumber"
                          placeholder="Phone Number"
                          formControlName="phone">
                 </mat-form-field>
@@ -71,20 +93,23 @@
               <div class="col-md-6 extra-space3">
                 <mat-form-field>
                   <mat-label>Select Gender</mat-label>
-                  <select matNativeControl
+                  <mat-select
+                          matNativeControl
                           formControlName="selectGender"
+                              [(ngModel)]="userInfo.user.applicant.creatorData.gender"
                           (click)="checkGenderValue(form.get('selectGender').value)"
                           id="select-gender">
-                    <option value="" disabled selected></option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                  </select>
+                    <mat-option value="N">Prefer no answer</mat-option>
+                    <mat-option value="M">Male</mat-option>
+                    <mat-option value="F">Female</mat-option>
+                    <mat-option value="O">Other</mat-option>
+                  </mat-select>
                 </mat-form-field>
               </div>
               <div *ngIf="genderValue" class="col-md-6 extra-space4">
                 <mat-form-field>
                   <input matInput
+                         [(ngModel)]="userInfo.user.applicant.creatorData.genderValue"
                          placeholder="Gender"
                          formControlName="otherGender">
                 </mat-form-field>
@@ -94,6 +119,7 @@
               <div class="col-md-6  extra-space3">
                 <mat-form-field class="mat-datepicker">
                   <input matInput
+                         [(ngModel)]="userInfo.user.applicant.creatorData.DOB"
                          [matDatepicker]="picker"
                          placeholder="Date of Birth"
                          md-select-on-focus
@@ -114,19 +140,20 @@
               <div class="col-md-6 extra-space3">
                 <mat-form-field>
                   <mat-label>Country</mat-label>
-                  <select matNativeControl
-                          formControlName="country"
-                          id="mySelectId">
-                    <option value="" disabled selected></option>
-                    <option value="volvo">Canada</option>
-                  </select>
+                  <mat-select
+                    *ngFor="let item of userInfo.user.applicant.address"
+                    [(ngModel)]="item.country"
+                    formControlName="country">
+                    <mat-option value="canada">Canada</mat-option>
+                  </mat-select>
                 </mat-form-field>
               </div>
               <div class="col-md-6 extra-space4">
                 <mat-form-field>
                   <mat-label>Province/ State</mat-label>
-                  <mat-select formControlName="state">
-                    <mat-option>None</mat-option>
+                  <mat-select  *ngFor="let item of userInfo.user.applicant.address"
+                               [(ngModel)]="item.provinceState"
+                    formControlName="state">
                     <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -134,7 +161,9 @@
             </div>
             <div class="email box">
               <mat-form-field>
-                <input matInput
+                <input *ngFor="let item of userInfo.user.applicant.address"
+                       [(ngModel)]="item.addressLine1"
+                      matInput
                        formControlName="address"
                        placeholder="Address">
               </mat-form-field>
@@ -142,7 +171,9 @@
             <div class="row">
               <div class="col-md-6 extra-space3">
                 <mat-form-field>
-                  <input matInput
+                  <input *ngFor="let item of userInfo.user.applicant.address"
+                         [(ngModel)]="item.city"
+                        matInput
                          placeholder="City"
                          class="form-group"
                          formControlName="city">
@@ -150,7 +181,9 @@
               </div>
               <div class="col-md-6 extra-space4">
                 <mat-form-field>
-                  <input matInput
+                  <input *ngFor="let item of userInfo.user.applicant.address"
+                         [(ngModel)]="item.postalCode"
+                        matInput
                          placeholder="Postal/ Zip Code"
                          formControlName="postal"
                          class="form-group">
@@ -167,6 +200,7 @@
             <button [routerLink]="['/main/creator/uploader']"
                     class="continue-btn"
                     type="submit"
+                    [disabled]="form.invalid"
                     [ngClass]="{'btn-disabled' : form.invalid}">Continue</button>
           </div>
         </form>
@@ -180,7 +214,7 @@
           <h1>Upload Signed Contracts</h1>
           <p>Please provide your contracts for verification. Download your contracts and upload them signed to continue.</p>
         </div>
-        <form  (ngSubmit)="onSubmit()">
+        <form  (ngSubmit)="onSubmitUploader()">
           <div class="line-block">
             <div class="preview-info">
               <div class="download-socan">
@@ -223,9 +257,8 @@
             <button class="back-to-apps-btn"
                     type="button"
                     (click)="save()">Previous</button>
-            <button class="continue-btn"
+            <button class="continue-btn-upload "
                     type="submit"
-                    [ngClass]="{'btn-disabled' : !pathInput}"
                     [disabled]="!pathInput">Send</button>
           </div>
         </form>

@@ -6,13 +6,15 @@
       </div>
     </div>
       <div *ngIf="isLogged" class="btn-logout" (click)="toggleButton()" [ngClass]="{'background-btn' : hide}">
-        <span>JS</span>
+        <span>{{userInitial.firstName}}{{userInitial.lastName}}</span>
       </div>
       <div *ngIf="hide" class="drop-down">
         <span>Account</span>
         <span (click)="logout()">Log Out</span>
       </div>
-    <div class="right-box"><button class="lang-btn" id="btn">Francais</button></div>
+    <div class="right-box">
+      <button *ngIf="!isLogged" class="lang-btn" id="btn">Francais</button>
+    </div>
   </div>
 </section>
 

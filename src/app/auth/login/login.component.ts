@@ -77,7 +77,7 @@ export class LoginComponent extends ClearObservable implements OnInit {
         .subscribe((data) => {
           const token = data.headers.get('authorization');
           console.log(token)
-          this.userService.saveUser(data);
+          this.userService.saveUser(token);
           console.log(data);
           this.showSpinner = false;
           this.router.navigate(['/main']);

@@ -13,4 +13,8 @@ export class MainService {
   getUser() {
     return this.http.get(`${environment.apiUrl}/onboarding-ms/getSelfApplicationData`);
   }
+
+  createApp(userInfo) {
+    return this.http.post(`${environment.apiUrl}/onboarding-ms/saveApplicationProgress`, userInfo);
+}
 }
