@@ -77,21 +77,6 @@
   }
 }
 
-.spinner-box {
-  width: 100%;
-  height: 100vh;
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(54, 255, 49, 0.03);
-  z-index: 1000;
-}
-
-:host ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
-  stroke: #00B274;
-}
-
 .save-btn {
   position: fixed;
   right: 22px;
@@ -144,13 +129,15 @@
   padding: 0;
   margin-bottom: 0;
   border: none;
+  max-width: 65%;
 }
 
 .toggle-alert {
+  top: 80px;
   height: auto;
   overflow: visible;
   transition: 0.3s;
-  z-index: 4000;
+  z-index: 700;
   padding: .75rem 1.25rem;
   margin-bottom: 1rem;
   border: 1px solid transparent;
@@ -165,9 +152,10 @@
   position: relative;
   z-index: 36;
   margin-top: 150px;
+  -webkit-animation: fade-onresize1 0.6s ease-in-out;
 
-  @media screen and(max-width: 765px){
-    margin-top: 100px!important;
+  @media screen and(max-width: 765px) {
+    margin-top: 100px !important;
   }
 
   input {
@@ -185,14 +173,15 @@
     padding-bottom: 0;
     font-family: Montserrat, sans-serif;
   }
-  @media screen and(max-width: 580px){
+
+  @media screen and(max-width: 580px) {
     margin-top: 150px;
   }
 
   .container-padding {
     padding: 20px;
 
-    @media screen and(max-width: 580px){
+    @media screen and(max-width: 580px) {
       padding: 0;
     }
   }
@@ -220,7 +209,7 @@
     display: flex;
     justify-content: center;
 
-    @media screen and(max-width: 900px){
+    @media screen and(max-width: 900px) {
       flex-direction: column;
     }
 
@@ -241,6 +230,7 @@
   .mat-datepicker {
     width: 200px;
   }
+
   .calendar-icon {
     width: 20px;
     height: 20px;
@@ -254,11 +244,16 @@
   }
 
   .dropdown-container {
-    position: relative;
+    position: absolute;
+    padding-top: 15px;
     background: white;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+
+    @media screen and(max-width: 765px) {
+      position: relative;
+    }
 
     .item-name {
       background-color: #EEEEEE;
@@ -278,27 +273,38 @@
       }
 
     }
-  }
+    .dropdown {
+      position: relative;
+      font-weight: 600;
+      color: #434343;
+      font-family: Montserrat, sans-serif;
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: space-between;
 
-  .dropdown {
-    position: relative;
-    font-weight: 600;
-    color: #434343;
-    font-family: Montserrat, sans-serif;
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-between;
-
-    img {
-      margin-left: 140px;
+      img {
+        margin-left: 140px;
+      }
     }
   }
+
+  .dropdownContHack {
+    position: relative;
+    margin-top: 0;
+  }
+
+
+
 
   .gender-box {
     margin-top: 20px!important;
   }
 
-
+.selection-box > option {
+  background: rgba(0,0,0,.12);
+  cursor: pointer;
+  padding: 10px 0;
+}
 
   .trigger {
     width: 16px;
@@ -382,6 +388,13 @@
   }
 }
 
+::ng-deep.mat-chip-list-wrapper {
+  position: absolute;
+  top: 22px;
+}
+::ng-deep.mat-standard-chip {
+  border-radius: 0!important;
+}
 .right-part {
 
   @media screen and(max-width: 580px) {
@@ -394,22 +407,6 @@
       margin-top: 50px;
     }
   }
-}
-
-
-.spinner-box {
-  width: 100%;
-  height: 100vh;
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(54, 255, 49, 0.03);
-  z-index: 1000;
-}
-
-:host ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
-  stroke: #00B274;
 }
 
 ::ng-deep.mat-select-arrow {
@@ -433,11 +430,15 @@ input:-webkit-autofill {
   color: #434343;
   font-family: Montserrat, sans-serif!important;
 }
+::ng-deep .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+  color: #D02139!important;
+}
 //==================================================================================
 //Uploader===========================================================================
 .box {
   position: relative;
   z-index: 23;
+  -webkit-animation: fade-onresize1 0.6s ease-in-out;
 
   @media screen and(max-width: 580px) {
     margin-top: 50px;
@@ -615,5 +616,19 @@ input:-webkit-autofill {
 .description-container {
   max-width: 560px;
 }
+@-webkit-keyframes fade-onresize1 { from { opacity: 0; } to { opacity: 1; }}
 
+.spinner-box {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(54, 255, 49, 0.03);
+  z-index: 1000;
+}
 
+:host ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+  stroke: #00B274;
+}

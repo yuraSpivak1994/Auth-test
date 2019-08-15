@@ -4,10 +4,10 @@
   </div>
   <div class="left-part">
     <div class="alert alert-success" role="alert" [ngClass]="{'toggle-alert': alertMessageSuccess}">
-      This is a success alert—check it out!
+      Success!
     </div>
     <div class="alert alert-danger" role="alert" [ngClass]="{'toggle-alert': alertMessageError}">
-      This is a danger alert—check it out!
+      Error!
     </div>
 
 
@@ -36,7 +36,7 @@
       </div>
 <!--      <router-outlet></router-outlet>-->
 <!--      PERSONAL INFO =================================================================-->
-      <div *ngIf="togglePagePersonal" class="form-container" [@simpleFadeAnimation]="'in'" >
+      <div *ngIf="togglePagePersonal" class="form-container">
         <form [formGroup]="form" (ngSubmit)="onSubmitApplication()" class="form" >
           <h3>Music Creator Application</h3>
           <h1>Personal Information</h1>
@@ -68,10 +68,10 @@
                   <img class="trigger" src="assets/images/login/add.png" (click)="toggleDropdown()">
                   </span>
 
-                  <div *ngIf="visibleDropdown" class="dropdown-container">
+                  <div *ngIf="visibleDropdown" class="dropdown-container" [ngClass]="{'dropdownContHack' : genderValue}">
                     <div *ngFor="let item of helperName" class="item-name">
                       <span>{{item.name}}</span>
-                      <div class='delete-item' (click)="deleteItem()">
+                      <div class='delete-item' (click)="deleteItem(item)">
                         <img src="/assets/images/login/remove.png" height="16" width="16"/></div>
                     </div>
                   </div>
@@ -93,17 +93,18 @@
               <div class="col-md-6 extra-space3">
                 <mat-form-field>
                   <mat-label>Select Gender</mat-label>
-                  <mat-select
+                  <select
                           matNativeControl
                           formControlName="selectGender"
-                              [(ngModel)]="userInfo.user.applicant.creatorData.gender"
+                          class="selection-box"
                           (click)="checkGenderValue(form.get('selectGender').value)"
+                          [(ngModel)]="userInfo.user.applicant.creatorData.gender"
                           id="select-gender">
-                    <mat-option value="N">Prefer no answer</mat-option>
-                    <mat-option value="M">Male</mat-option>
-                    <mat-option value="F">Female</mat-option>
-                    <mat-option value="O">Other</mat-option>
-                  </mat-select>
+                    <option value="N">Prefer no answer</option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                    <option value="O">Other</option>
+                  </select>
                 </mat-form-field>
               </div>
               <div *ngIf="genderValue" class="col-md-6 extra-space4">
@@ -197,10 +198,9 @@
           </div>
           <div class="btn-container">
             <button [routerLink]="['/main']" class="back-to-apps-btn">Back to Application Type</button>
-            <button [routerLink]="['/main/creator/uploader']"
+            <button (click)="nextStep()"
                     class="continue-btn"
-                    type="submit"
-                    [disabled]="form.invalid"
+                    type="button"
                     [ngClass]="{'btn-disabled' : form.invalid}">Continue</button>
           </div>
         </form>
@@ -208,7 +208,7 @@
       </div>
 <!--      ================================================================================================-->
 <!--UPLOADER==============================================================================================-->
-      <div *ngIf="toggleUploader" class="box" [@simpleFadeAnimation]="'in'">
+      <div *ngIf="toggleUploader" class="box">
         <div class="description-container">
           <h3>Music Creator Application</h3>
           <h1>Upload Signed Contracts</h1>
@@ -256,7 +256,7 @@
           <div class="btn-container">
             <button class="back-to-apps-btn"
                     type="button"
-                    (click)="save()">Previous</button>
+                    (click)="previousStep()">Previous</button>
             <button class="continue-btn-upload "
                     type="submit"
                     [disabled]="!pathInput">Send</button>

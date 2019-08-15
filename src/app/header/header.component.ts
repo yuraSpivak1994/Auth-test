@@ -3,6 +3,7 @@ import { UserService } from '../shared/services/user.service';
 import { Router } from '@angular/router';
 import { MainService } from '../main/main.service';
 import { User } from '../shared/models';
+import { StepperHelperService } from '../shared/services/stepper-helper.service';
 
 @Component({
   selector: 'app-header',
@@ -24,15 +25,18 @@ export class HeaderComponent implements OnInit {
     firstName: '',
     lastName: ''
   };
+  showSpinner = false;
+
 
   constructor(private userService: UserService,
               private router: Router,
-              private mainService: MainService) {
+              private mainService: MainService,
+              private stepperHelperService: StepperHelperService) {
   }
 
   ngOnInit() {
-    this.checkIsBtn();
-    this.getUserData();
+    // this.checkIsBtn();
+    // this.getUserData();
   }
 
   cutInitials(firstName, lastName) {
@@ -66,15 +70,21 @@ export class HeaderComponent implements OnInit {
     localStorage.clear();
     this.hide = false;
     this.isLogged = false;
+    this.showSpinner = false;
     this.router.navigate(['']);
   }
 
   getUserData() {
+    this.showSpinner = true;
     this.mainService.getUser()
       .subscribe((res: any) => {
         this.userInfo = res;
+        this.showSpinner = false;
         this.cutInitials(this.userInfo.user.firstName, this.userInfo.user.lastName);
+      }, error => {
+        this.showSpinner = false;
       });
   }
+
 }
 

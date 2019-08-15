@@ -10,6 +10,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { MainInterceptor } from './interceptor/main-interceptor';
 import { StepperComponent } from './stepper/stepper.component';
+import { MatProgressSpinnerModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { StepperComponent } from './stepper/stepper.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AuthModule
+    AuthModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     {

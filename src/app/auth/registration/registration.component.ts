@@ -64,9 +64,7 @@ export class RegistrationComponent extends ClearObservable implements OnInit {
   showSpinner = false;
 
   constructor(private formBuilder: FormBuilder,
-              private authService: AuthService,
-              private userService: UserService,
-              private router: Router) {
+              private authService: AuthService) {
     super();
   }
 

@@ -1,3 +1,6 @@
+<div *ngIf="showSpinner" class="spinner-box">
+  <mat-spinner *ngIf="showSpinner"></mat-spinner>
+</div>
 <section class="web_homePage" (scroll)="onWindowScroll($event);">
   <div class="row"  id="navbar">
     <div class="left-box">
