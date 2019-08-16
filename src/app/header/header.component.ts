@@ -35,8 +35,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.checkIsBtn();
-    // this.getUserData();
+    this.checkIsBtn();
+    this.getUserData();
   }
 
   cutInitials(firstName, lastName) {
